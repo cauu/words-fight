@@ -1,0 +1,174 @@
+
+NPC_007.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+gong
+  rotate: false
+  xy: 2, 118
+  size: 168, 136
+  orig: 168, 136
+  offset: 0, 0
+  index: -1
+gongji
+  rotate: true
+  xy: 264, 51
+  size: 82, 81
+  orig: 82, 81
+  offset: 0, 0
+  index: -1
+ku
+  rotate: false
+  xy: 347, 33
+  size: 82, 81
+  orig: 82, 81
+  offset: 0, 0
+  index: -1
+maozi1
+  rotate: true
+  xy: 351, 116
+  size: 138, 114
+  orig: 138, 114
+  offset: 0, 0
+  index: -1
+pifeng
+  rotate: false
+  xy: 172, 135
+  size: 177, 119
+  orig: 177, 119
+  offset: 0, 0
+  index: -1
+qunzi
+  rotate: true
+  xy: 61, 43
+  size: 73, 54
+  orig: 73, 54
+  offset: 0, 0
+  index: -1
+shenti
+  rotate: false
+  xy: 431, 31
+  size: 78, 83
+  orig: 78, 83
+  offset: 0, 0
+  index: -1
+tou
+  rotate: true
+  xy: 172, 51
+  size: 82, 90
+  orig: 82, 90
+  offset: 0, 0
+  index: -1
+you_datui
+  rotate: true
+  xy: 248, 18
+  size: 31, 41
+  orig: 31, 41
+  offset: 0, 0
+  index: -1
+you_erduo
+  rotate: true
+  xy: 56, 7
+  size: 34, 39
+  orig: 34, 39
+  offset: 0, 0
+  index: -1
+you_jianjia
+  rotate: false
+  xy: 374, 6
+  size: 43, 25
+  orig: 43, 25
+  offset: 0, 0
+  index: -1
+you_jiao
+  rotate: false
+  xy: 460, 9
+  size: 22, 20
+  orig: 22, 20
+  offset: 0, 0
+  index: -1
+you_shangbi
+  rotate: false
+  xy: 2, 8
+  size: 52, 50
+  orig: 52, 50
+  offset: 0, 0
+  index: -1
+you_shou
+  rotate: true
+  xy: 419, 4
+  size: 25, 39
+  orig: 25, 39
+  offset: 0, 0
+  index: -1
+you_xiaobi
+  rotate: true
+  xy: 163, 5
+  size: 44, 47
+  orig: 44, 47
+  offset: 0, 0
+  index: -1
+you_xiaotui
+  rotate: false
+  xy: 337, 2
+  size: 35, 29
+  orig: 35, 29
+  offset: 0, 0
+  index: -1
+zuo_datui
+  rotate: false
+  xy: 467, 120
+  size: 35, 48
+  orig: 35, 48
+  offset: 0, 0
+  index: -1
+zuo_erduo
+  rotate: false
+  xy: 291, 20
+  size: 44, 29
+  orig: 44, 29
+  offset: 0, 0
+  index: -1
+zuo_jianjia
+  rotate: true
+  xy: 467, 170
+  size: 40, 36
+  orig: 40, 36
+  offset: 0, 0
+  index: -1
+zuo_jiao
+  rotate: false
+  xy: 212, 15
+  size: 34, 34
+  orig: 34, 34
+  offset: 0, 0
+  index: -1
+zuo_shangbi
+  rotate: false
+  xy: 117, 9
+  size: 44, 58
+  orig: 44, 58
+  offset: 0, 0
+  index: -1
+zuo_shou
+  rotate: true
+  xy: 117, 69
+  size: 47, 46
+  orig: 47, 46
+  offset: 0, 0
+  index: -1
+zuo_xiaobi
+  rotate: true
+  xy: 2, 60
+  size: 56, 57
+  orig: 56, 57
+  offset: 0, 0
+  index: -1
+zuo_xiaotui
+  rotate: false
+  xy: 467, 212
+  size: 38, 42
+  orig: 38, 42
+  offset: 0, 0
+  index: -1

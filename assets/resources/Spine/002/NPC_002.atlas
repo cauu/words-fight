@@ -1,0 +1,258 @@
+
+NPC_002.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+astly0011
+  rotate: false
+  xy: 318, 2
+  size: 106, 106
+  orig: 106, 106
+  offset: 0, 0
+  index: -1
+fen nu biao qing
+  rotate: true
+  xy: 705, 159
+  size: 37, 34
+  orig: 37, 34
+  offset: 0, 0
+  index: -1
+gong jian
+  rotate: false
+  xy: 164, 103
+  size: 152, 151
+  orig: 152, 151
+  offset: 0, 0
+  index: -1
+hu_siwang
+  rotate: false
+  xy: 2, 14
+  size: 81, 72
+  orig: 81, 72
+  offset: 0, 0
+  index: -1
+hudaiji
+  rotate: false
+  xy: 433, 113
+  size: 113, 141
+  orig: 113, 141
+  offset: 0, 0
+  index: -1
+hufennu
+  rotate: false
+  xy: 318, 110
+  size: 113, 144
+  orig: 113, 144
+  offset: 0, 0
+  index: -1
+hushen
+  rotate: false
+  xy: 2, 88
+  size: 160, 166
+  orig: 160, 166
+  offset: 0, 0
+  index: -1
+huyouhooujiao
+  rotate: false
+  xy: 741, 164
+  size: 32, 11
+  orig: 32, 11
+  offset: 0, 0
+  index: -1
+huyouhoudatui
+  rotate: false
+  xy: 267, 19
+  size: 41, 41
+  orig: 41, 41
+  offset: 0, 0
+  index: -1
+huyouhouxiaotui
+  rotate: false
+  xy: 741, 177
+  size: 33, 30
+  orig: 33, 30
+  offset: 0, 0
+  index: -1
+huyouqiandatuo
+  rotate: false
+  xy: 853, 206
+  size: 46, 48
+  orig: 46, 48
+  offset: 0, 0
+  index: -1
+huyouqianjiao
+  rotate: false
+  xy: 616, 108
+  size: 42, 19
+  orig: 42, 19
+  offset: 0, 0
+  index: -1
+huyouqianxiaotui
+  rotate: true
+  xy: 267, 62
+  size: 39, 44
+  orig: 39, 44
+  offset: 0, 0
+  index: -1
+shen ti
+  rotate: false
+  xy: 85, 26
+  size: 59, 60
+  orig: 59, 60
+  offset: 0, 0
+  index: -1
+si wang biao qing
+  rotate: false
+  xy: 661, 161
+  size: 42, 35
+  orig: 42, 35
+  offset: 0, 0
+  index: -1
+tou
+  rotate: false
+  xy: 548, 113
+  size: 66, 69
+  orig: 66, 69
+  offset: 0, 0
+  index: -1
+tou fa
+  rotate: false
+  xy: 548, 184
+  size: 111, 70
+  orig: 111, 70
+  offset: 0, 0
+  index: -1
+weiba
+  rotate: false
+  xy: 661, 198
+  size: 65, 56
+  orig: 65, 56
+  offset: 0, 0
+  index: -1
+yao bu
+  rotate: false
+  xy: 660, 106
+  size: 39, 21
+  orig: 39, 21
+  offset: 0, 0
+  index: -1
+you er
+  rotate: true
+  xy: 85, 2
+  size: 22, 35
+  orig: 22, 35
+  offset: 0, 0
+  index: -1
+you jian jia
+  rotate: false
+  xy: 901, 213
+  size: 48, 41
+  orig: 48, 41
+  offset: 0, 0
+  index: -1
+you shang bi
+  rotate: true
+  xy: 700, 129
+  size: 28, 38
+  orig: 28, 38
+  offset: 0, 0
+  index: -1
+you xiao bi
+  rotate: false
+  xy: 222, 20
+  size: 43, 39
+  orig: 43, 39
+  offset: 0, 0
+  index: -1
+zuo er
+  rotate: false
+  xy: 659, 129
+  size: 39, 30
+  orig: 39, 30
+  offset: 0, 0
+  index: -1
+zuo jian jia
+  rotate: false
+  xy: 728, 209
+  size: 67, 45
+  orig: 67, 45
+  offset: 0, 0
+  index: -1
+zuo shang bi
+  rotate: true
+  xy: 951, 228
+  size: 26, 59
+  orig: 26, 59
+  offset: 0, 0
+  index: -1
+zuo xiao bi
+  rotate: false
+  xy: 146, 36
+  size: 27, 50
+  orig: 27, 50
+  offset: 0, 0
+  index: -1
+zuodatui
+  rotate: false
+  xy: 175, 20
+  size: 45, 38
+  orig: 45, 38
+  offset: 0, 0
+  index: -1
+zuohoudatui
+  rotate: true
+  xy: 797, 201
+  size: 53, 54
+  orig: 53, 54
+  offset: 0, 0
+  index: -1
+zuohoujiao
+  rotate: false
+  xy: 951, 208
+  size: 46, 18
+  orig: 46, 18
+  offset: 0, 0
+  index: -1
+zuohouxiaotui
+  rotate: false
+  xy: 175, 60
+  size: 44, 41
+  orig: 44, 41
+  offset: 0, 0
+  index: -1
+zuojiao
+  rotate: false
+  xy: 122, 8
+  size: 13, 16
+  orig: 13, 16
+  offset: 0, 0
+  index: -1
+zuoqiandatui
+  rotate: false
+  xy: 616, 129
+  size: 41, 53
+  orig: 41, 53
+  offset: 0, 0
+  index: -1
+zuoqianjiao
+  rotate: false
+  xy: 701, 108
+  size: 42, 19
+  orig: 42, 19
+  offset: 0, 0
+  index: -1
+zuoqinaxiaotui
+  rotate: true
+  xy: 221, 61
+  size: 40, 44
+  orig: 40, 44
+  offset: 0, 0
+  index: -1
+zuoxiaotui
+  rotate: false
+  xy: 776, 175
+  size: 19, 32
+  orig: 19, 32
+  offset: 0, 0
+  index: -1
