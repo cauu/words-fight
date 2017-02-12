@@ -1,6 +1,6 @@
 global.Framework = {}
 
-var Redux = require('./Libs/Redux.js')
+global.store = require('./Store/CreateStore.js')({})
 require('./Libs/Md5.js')
 
 require('./Utils/JsExtention.js')

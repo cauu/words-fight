@@ -1,5 +1,11 @@
-cc.Class({
+module.exports = cc.Class({
     extends: cc.Component,
+
+    ctor: function() {
+      this.store = global.store
+
+      this.dispatch = this.store.dispatch
+    },
 
     properties: {
         // foo: {
@@ -16,8 +22,18 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
+      var store = this.store
 
+      if(!!store) {
+        store.subscribe(function() {
+          this.onStateChange(store.getState());
+        }.bind(this))
+      }
     },
+
+    onStateChange: function(state) {
+      cc.log('parent on state change')
+    }
 
     // called every frame, uncomment this function to activate update callback
     // update: function (dt) {
