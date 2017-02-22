@@ -7,6 +7,8 @@ const QuestionSchema = new Schema({
   type: { type: Number },
   slug: { type: String },
   fullSlug: { type: String },
+  afterCorrect: { type: Schema.Types.ObjectId },
+  afterError: { type: Schema.Types.ObjectId },
   answers: [{
     text: { type: String },
     next: { type: Schema.Types.ObjectId }
