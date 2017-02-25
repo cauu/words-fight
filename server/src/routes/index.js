@@ -1,15 +1,20 @@
 import compose from 'koa-compose';
 import Router from 'koa-router';
 
+import RouteAdmin from './admin';
+import RouteClient from './client';
+
 const router = new Router();
 
-router.get('/', async (ctx, next) => {
-  ctx.body = 'hello';
-})
+router.use('/admin-api/v1', RouteAdmin.routes(), RouteAdmin.allowedMethods());
+router.use('/client-api/v1', RouteClient.routes(), RouteClient.allowedMethods());
 
 router.get('*', async (ctx, next) => {
-  ctx.body = { status: 404 };
-})
+  ctx.body = { 
+    status: 'FAILED',
+    result: 'NOT FOUND'
+  };
+});
 
 export default function routes() {
   return compose(
@@ -18,4 +23,4 @@ export default function routes() {
       router.allowedMethods()
     ]
   )
-}
+};

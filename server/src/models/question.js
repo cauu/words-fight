@@ -2,17 +2,21 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
+/**@property
+ * type: enum('select', 'blank')
+ */
 const QuestionSchema = new Schema({
   text: { type: String },
-  type: { type: Number },
+  type: { type: String },
   slug: { type: String },
   fullSlug: { type: String },
-  afterCorrect: { type: Schema.Types.ObjectId },
-  afterError: { type: Schema.Types.ObjectId },
   answers: [{
     text: { type: String },
-    next: { type: Schema.Types.ObjectId }
+    isCorrect: { type: Boolean },
+    next: { type: Schema.Types.ObjectId, ref: 'Question' }
   }],
+  afterCorrect: { type: Schema.Types.ObjectId, ref: 'Question' },
+  afterError: { type: Schema.Types.ObjectId, ref: 'Question' },
   createdAt: { type: Date }
 });
 
