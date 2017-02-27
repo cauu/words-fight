@@ -9,13 +9,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.4.7",
     "kcors": "^2.2.1",
     "koa": "^2.0.0-alpha.8",
     "koa-bodyparser": "^3.2.0",
     "koa-compose": "^3.2.1",
     "koa-passport": "^2.2.2",
     "koa-router": "^7.0.1",
-    "mongoose": "^4.8.4"
+    "mongoose": "^4.8.4",
+    "thunkify": "^2.1.2"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",

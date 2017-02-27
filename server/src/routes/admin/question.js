@@ -1,29 +1,18 @@
 import Router from 'koa-router';
 
+import {
+  listQuestions,
+  createQuestion
+} from '../../apis/admin/question';
+
 const router = new Router();
 
 router.get('/', async (ctx, next) => {
-  let plan = {
-    'test': 'test',
-    'haha': 'haha'
-  }
-
-  await testAsync();
-
-  ctx.body = {
-    status: 'SUCCESS',
-    result: plan,
-    pagination: {
-      pageNo: 1,
-      nextPageNo: 2
-    }
-  }
+  ctx.body = await listQuestions(ctx.query);
 });
 
 router.post('/', async (ctx, next) => {
-  ctx.body = {
-    status: "POST"
-  }
+  ctx.body = await createQuestion(ctx.request.body);
 })
 
 export default router;

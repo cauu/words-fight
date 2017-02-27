@@ -6,8 +6,8 @@ const Schema = mongoose.Schema;
  * type: enum('select', 'blank')
  */
 const QuestionSchema = new Schema({
-  text: { type: String },
-  type: { type: String },
+  text: { type: String, require: true },
+  type: { type: String, require: true },
   slug: { type: String },
   fullSlug: { type: String },
   answers: [{
@@ -17,7 +17,8 @@ const QuestionSchema = new Schema({
   }],
   afterCorrect: { type: Schema.Types.ObjectId, ref: 'Question' },
   afterError: { type: Schema.Types.ObjectId, ref: 'Question' },
-  createdAt: { type: Date }
+  createdAt: { type: Number },
+  updatedAt: { type: Number }
 });
 
 module.exports = mongoose.model('Question', QuestionSchema);
