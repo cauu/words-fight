@@ -1,15 +1,18 @@
 import path from 'path';
 
+import convert from 'koa-convert';
 import compose from 'koa-compose';
 import cors from 'kcors';
 import bodyParser from 'koa-bodyparser';
 import log4js from 'log4js';
 import * as swagger from 'swagger2';
 import { validate } from 'swagger2-koa';
+import validator from 'koa-validate';
 
 export default function baseConfig(app) {
   app.proxy = true;
 
+  validator(app);
   const document = swagger.loadDocumentSync('./swagger.yml');
 
    if(!swagger.validateDocument(document)) {
@@ -31,5 +34,5 @@ export default function baseConfig(app) {
 
   app.use(cors({ credentials: true }));
   app.use(bodyParser());
-  app.use(validate(document));
+  // app.use(validate(document));
 }

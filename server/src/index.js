@@ -10,7 +10,6 @@ import config from './config/config';
 
 const { mongodb } = config;
 mongoose.Promise = Promise;
-console.log(config);
 mongoose.connect(mongodb.dbUrl, mongodb.dbOpt);
 
 const app = new Koa();

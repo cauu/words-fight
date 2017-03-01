@@ -7,7 +7,10 @@ import RouteClient from './client';
 const router = new Router();
 
 router.use(async (ctx, next) => {
-  await next();
+  ctx.checkQuery = ctx.checkQuery.bind(ctx);
+  ctx.checkParams = ctx.checkParams.bind(ctx);
+  ctx.checkBody = ctx.checkBody.bind(ctx);
+  await next(ctx);
 })
 
 router.use('/admin-api/v1', RouteAdmin.routes(), RouteAdmin.allowedMethods());

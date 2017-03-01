@@ -3,8 +3,14 @@ import {
   getQuestions, 
   addQuestion 
 } from '../../services/question';
+import { validator } from '../../utils/common';
 
 async function listQuestions({ query, checkQuery }) {
+  let errors = validator(
+    checkQuery('pageNo').ge(1).hasError(),
+    checkQuery('pageSize').ge(1).hasError()
+  );
+
   const { pageNo, pageSize } = query;
 
   let questions = await getQuestions(pageNo, pageSize);
