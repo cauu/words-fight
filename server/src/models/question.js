@@ -6,6 +6,7 @@ const Schema = mongoose.Schema;
  * type: enum('select', 'blank')
  */
 const QuestionSchema = new Schema({
+  title: { type: String, require: true },
   text: { type: String, require: true },
   type: { type: String, require: true },
   slug: { type: String },

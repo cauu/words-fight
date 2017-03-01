@@ -8,11 +8,11 @@ import {
 const router = new Router();
 
 router.get('/', async (ctx, next) => {
-  ctx.body = await listQuestions(ctx.query);
+  ctx.body = await listQuestions(ctx);
 });
 
 router.post('/', async (ctx, next) => {
-  ctx.body = await createQuestion(ctx.request.body);
+  ctx.body = await createQuestion(ctx);
 })
 
 export default router;

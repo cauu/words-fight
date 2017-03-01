@@ -15,20 +15,10 @@ function getQuestions({ pageNo, pageSize }) {
   ;
 }
 
-function addQuestion({ text, type, afterCorrect, afterError, answers }) {
-  let quest = new Question({
-    text,
-    type, 
-    afterCorrect,
-    afterError,
-    answers,
-    createdAt: new Date().getTime(),
-    updatedAt: new Date().getTime()
-  });
-
-  console.log(quest);
-
-  return thunkify(quest.save);
+function addQuestion(quest) {
+  return Question
+    .create(quest)
+  ;
 }
 
 function getQuestion(id) {

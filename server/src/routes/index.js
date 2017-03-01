@@ -6,6 +6,10 @@ import RouteClient from './client';
 
 const router = new Router();
 
+router.use(async (ctx, next) => {
+  await next();
+})
+
 router.use('/admin-api/v1', RouteAdmin.routes(), RouteAdmin.allowedMethods());
 router.use('/client-api/v1', RouteClient.routes(), RouteClient.allowedMethods());
 
