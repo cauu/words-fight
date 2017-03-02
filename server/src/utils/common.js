@@ -1,5 +1,7 @@
 function validator(...validateFunc) {
-  return validateFunc.includes(true);
+  if(validateFunc.includes(true)) {
+    throw new Error('Parameter Error');
+  }
 }
 
 export {

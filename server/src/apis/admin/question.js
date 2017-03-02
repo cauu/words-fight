@@ -6,7 +6,7 @@ import {
 import { validator } from '../../utils/common';
 
 async function listQuestions({ query, checkQuery }) {
-  let errors = validator(
+  validator(
     checkQuery('pageNo').ge(1).hasError(),
     checkQuery('pageSize').ge(1).hasError()
   );

@@ -29,17 +29,12 @@ function delQuestion(id) {
   return Question.findOneAndRemove({ _id: id }).exec();
 }
 
-async function updateQuestion(param) {
-  await Question.findOneAndUpdate(
-    {
-      
-    },
-    {
-    }
-  )
+function updateQuestion(param) {
+  // return Question.findOneAndUpdate({ _id: id })
 }
 
 export {
   getQuestions,
-  addQuestion
+  addQuestion,
+  delQuestion
 };

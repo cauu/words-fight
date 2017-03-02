@@ -7,6 +7,7 @@ const Schema = mongoose.Schema;
  */
 const QuestionSchema = new Schema({
   title: { type: String, require: true },
+  scene: { type: Schema.Types.ObjectId, ref: 'Scene' },
   text: { type: String, require: true },
   type: { type: String, require: true },
   slug: { type: String },
