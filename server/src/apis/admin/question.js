@@ -1,35 +1,69 @@
 import { successDec, failedDec } from '../../utils/api';
 import { 
   getQuestions, 
-  addQuestion 
+  addQuestion,
+  delQuestion,
+  updateQuestion
 } from '../../services/question';
 import { validator } from '../../utils/common';
 
 async function listQuestions({ query, checkQuery }) {
   validator(
-    checkQuery('pageNo').ge(1).hasError(),
-    checkQuery('pageSize').ge(1).hasError()
+    checkQuery('pageNo').ge(1),
+    checkQuery('pageSize').ge(1),
+    checkQuery('sid').optional()
   );
 
-  const { pageNo, pageSize } = query;
-
-  let questions = await getQuestions(pageNo, pageSize);
+  let questions = await getQuestions(query);
 
   return successDec(questions);
 }
 
 async function createQuestion({ request, checkBody }) {
-  let { plan } = request.body;
+  validator(
+    checkBody('title').notEmpty(),
+    checkBody('text').notEmpty(),
+    checkBody('type').notEmpty()
+  );
 
-  let result = await addQuestion(plan);
+  let question = request.body;
+
+  let result = await addQuestion(question);
 
   return successDec(result);
 }
 
-async function removeQuestion(pid) {
+async function removeQuestion({ query, checkQuery }) {
+  validator(
+    checkQuery('id').notEmpty()
+  );
+
+  let { id } = query;
+
+  let result = await delQuestion(id);
+
+  return successDec(result);
+}
+
+async function modifyQuestion({ request, query, checkQuery, checkBody }) {
+  validator(
+    checkQuery('id').notEmpty(),
+    checkBody('title').optional().notEmpty(),
+    checkBody('text').optional().notEmpty(),
+    checkBody('type').optional().notEmpty(),
+    checkBody('anwsers').optional()
+  );
+
+  let { id } = query;
+
+  let result = await updateQuestion(id, request.body);
+
+  return successDec(result);
 }
 
 export {
   listQuestions,
-  createQuestion
+  createQuestion,
+  removeQuestion,
+  modifyQuestion
 };

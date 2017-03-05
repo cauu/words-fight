@@ -1,6 +1,8 @@
 function validator(...validateFunc) {
-  if(validateFunc.includes(true)) {
-    throw new Error('Parameter Error');
+  for(let i = 0; i < validateFunc.length; i++) {
+    if(validateFunc[i].hasError()) {
+      throw new Error('Incorrect type of Parameter');
+    }
   }
 }
 

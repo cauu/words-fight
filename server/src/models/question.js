@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
  * type: enum('select', 'blank')
  */
 const QuestionSchema = new Schema({
-  title: { type: String, require: true },
+  title: { type: String, require: true, unique: true },
   scene: { type: Schema.Types.ObjectId, ref: 'Scene' },
   text: { type: String, require: true },
   type: { type: String, require: true },

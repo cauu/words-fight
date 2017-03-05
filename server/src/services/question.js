@@ -5,9 +5,11 @@ import Question from '../models/question';
 
 /**@arg {number} pageNo 页码数*/
 /**@arg {number} pageSize 页数*/
-function getQuestions({ pageNo, pageSize }) {
+function getQuestions({ pageNo, pageSize, sid, title }) {
   return Question
-    .find({})
+    .find({
+      sid
+    })
     .skip((pageNo - 1) * pageSize)
     .limit(pageSize)
     .sort({ createdAt: -1 })
@@ -29,12 +31,15 @@ function delQuestion(id) {
   return Question.findOneAndRemove({ _id: id }).exec();
 }
 
-function updateQuestion(param) {
-  // return Question.findOneAndUpdate({ _id: id })
+function updateQuestion(id, quest) {
+  return Question
+    .findOneAndUpdate({ _id: id }, { $set: quest }, { new: true, upsert: false })
+  ;
 }
 
 export {
   getQuestions,
   addQuestion,
-  delQuestion
+  delQuestion,
+  updateQuestion
 };
