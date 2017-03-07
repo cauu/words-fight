@@ -9,7 +9,7 @@ import { validator } from '../../utils/common';
 
 async function listScenes({ query, checkQuery }) {
   validator(
-    checkQuery('pageNo'),ge(1),
+    checkQuery('pageNo').ge(1),
     checkQuery('pageSize').ge(1),
     checkQuery('lid').optional()
   );

@@ -42,7 +42,7 @@ async function removeQuestion({ query, checkQuery }) {
 
   let result = await delQuestion(id);
 
-  return successDec(result);
+return successDec(result);
 }
 
 async function modifyQuestion({ request, query, checkQuery, checkBody }) {

@@ -1,5 +1,4 @@
 import mongoose, { Types } from 'mongoose';
-import thunkify from 'thunkify';
 
 import Scene from '../models/scene';
 
