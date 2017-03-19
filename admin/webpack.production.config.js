@@ -10,9 +10,8 @@ var autoprefixer = require('autoprefixer');
 
 module.exports = {
   entry: {
-    browser: path.join(__dirname, 'app/App.js'),
+    browser: path.join(__dirname, 'app/index.js'),
     ieCompatible: path.join(__dirname, 'app/utils/ie-compatible.js'),
-    mobile: path.join(__dirname, 'app/App-h5.js'),
     common: ['react', 'react-router']
   },
   output: {
@@ -28,7 +27,7 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common',
       filename: 'common-[chunkhash].min.js',
-      chunks: ['browser', 'mobile']
+      chunks: ['browser']
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',
@@ -46,17 +45,6 @@ module.exports = {
       minify: {
         collapseWhitespace: true,
         processConditionalComments: true
-      }
-    }),
-    new HtmlWebpackPlugin({
-      template: 'app/index-h5.html',
-      filename: 'index-h5.html',
-      chunks: ['common', 'mobile'],
-      chunksSortMode: function (chunk1, chunk2) {
-        return chunk1.id - chunk2.id;
-      },
-      minify: {
-        collapseWhitespace: true
       }
     }),
     new InlineManifestWebpackPlugin(),

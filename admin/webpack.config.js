@@ -10,7 +10,7 @@ module.exports = {
   entry: {
     browser: [
       'webpack-hot-middleware/client?reload=true',
-      path.join(__dirname, 'app/App.js')
+      path.join(__dirname, 'app/index.js')
     ],
     ieCompatible: path.join(__dirname, 'app/utils/ie-compatible.js')
   },
@@ -25,7 +25,7 @@ module.exports = {
       filename: 'index.html',
       inject: false,
       chunks: ['browser', 'ieCompatible']
-    })
+    }),
     new ExtractTextPlugin('[name].css'),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),

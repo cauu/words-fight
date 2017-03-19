@@ -15,7 +15,7 @@ function parseJSON(response) {
 }
 
 function concatUrl(url, query) {
-  const concatStr = '?';
+  let concatStr = '?';
   let keys = Object.keys(query);
   let result = url;
 

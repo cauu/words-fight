@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Router, IndexRoute, Route } from 'react-router'; 
 
-import App from '../App';
+import App from '../pages';
 
-class Router extends Component {
+class Routers extends Component {
   render() {
     return (
       <Router {...this.props}>
@@ -15,4 +15,4 @@ class Router extends Component {
   }
 }
 
-export default Router;
+export default Routers;
