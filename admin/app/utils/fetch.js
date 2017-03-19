@@ -14,7 +14,26 @@ function parseJSON(response) {
    return response.json().then(resJson => resJson);
 }
 
-export function Post(url, params) {
+function concatUrl(url, query) {
+  const concatStr = '?';
+  let keys = Object.keys(query);
+  let result = url;
+
+  if(url.indexOf(concatStr) > -1) {
+    concatStr = '&';
+  }
+
+  for(let i = 0; i < keys.length; i++) {
+    if(i > 0) {
+      concatStr = '&';
+    }
+    reuslt = result + concatStr + keys[i]  + '=' + query[keys[i]];
+  }
+
+  return result;
+}
+
+function Post(url, data) {
   const config = {
     method: 'post',
     headers: {
@@ -22,12 +41,10 @@ export function Post(url, params) {
       'Content-Type': 'application/json'
     },
     credentials: 'same-origin',
-    body: JSON.stringify(params)
+    body: JSON.stringify(data)
   };
 
-  return fetch(url, config)
-    .then(checkStatus)
-    .then(parseJSON);
+  return fetch(url, config);
 }
 
 export function Get(url) {
@@ -39,12 +56,10 @@ export function Get(url) {
     },
     credentials: 'same-origin'
   };
-  return fetch(url, config)
-    .then(checkStatus)
-    .then(parseJSON);
+  return fetch(url, config);
 }
 
-export function Delete(url) {
+function Delete(url) {
   const config = {
     method: 'delete',
     headers: {
@@ -53,7 +68,25 @@ export function Delete(url) {
     },
     credentials: 'same-origin'
   };
-  return fetch(url, config)
-    .then(checkStatus)
-    .then(parseJSON);
+  return fetch(url, config);
+}
+
+
+function remote(options) {
+  const funcs = {
+    delete: Delete,
+    get: GET,
+    post: POST
+  };
+
+  let { method, url, query, data } = options;
+
+  if(funcs[method.toLowerCase()]) {
+    return funcs[method.toLowerCase()](concatUrl(url, query), data)
+      .then(checkStatus)
+      .then(parseJSON)
+    ;
+  } else {
+    throw new Error('No such http request.');
+  }
 }
