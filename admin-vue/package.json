@@ -1,0 +1,23 @@
+{
+  "name": "admin-vue",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "vue": "^2.2.6",
+    "vue-router": "^2.4.0"
+  },
+  "devDependencies": {
+    "css-loader": "^0.28.0",
+    "file-loader": "^0.11.1",
+    "typescript": "^2.2.2",
+    "vue-loader": "^11.3.4",
+    "vue-ts-loader": "0.0.3",
+    "webpack": "^2.3.3"
+  }
+}
