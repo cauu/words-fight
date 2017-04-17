@@ -1,0 +1,30 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Firefox index.html (sourcemaps)",
+            "type": "firefox",
+            "url": "http://localhost:8080/index.html",
+            "webRoot": "${workspaceRoot}",
+            "request": "launch"
+        },
+        {
+            "name": "Launch Chrome with sourcemaps",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:8080/index.html",
+            "sourceMaps": true,
+            "webRoot": "${workspaceRoot}",
+            "runtimeExecutable": "chromium"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "sourceMaps": true,
+            "program": "${workspaceRoot}/server.js",
+            "cwd": "${workspaceRoot}",
+            "outFiles": ["${workspaceRoot}/**/*.js"]
+        }
+    ]
+}
