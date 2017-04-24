@@ -1,16 +1,14 @@
-import Vue = require('vue')
-
 declare var require: any
-// import App = require('./App')
-// import App from './App'
+
+// import Vue = require('vue')
+import * as Vue from 'vue';
+// var App = require('./pages/App/index.vue').default;
+import App from './pages/App/index.vue';
 
 new Vue({
   el : '#app', 
-  // template : '<App/>', 
-  // components : {
-  //   // App
-  // }
-  render(h) {
-    return h('h1', 'hello world');
+  template : '<App/>', 
+  components: {
+    App
   }
 })
