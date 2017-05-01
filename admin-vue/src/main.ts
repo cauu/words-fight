@@ -1,14 +1,13 @@
 declare var require: any
 
-// import Vue = require('vue')
 import * as Vue from 'vue';
-var App = require('./pages/App/index.vue').default;
-// import App from './pages/App/index.vue';
+
+import router from './route';
+import store from './store/index';
 
 new Vue({
+  router,
+  store,
   el : '#app', 
-  template : '<App/>', 
-  components: {
-    App
-  }
+  template : '<router-view></router-view>'
 })
