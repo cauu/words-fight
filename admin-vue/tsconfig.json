@@ -7,7 +7,8 @@
         "outDir": "dist",
         "lib": ["es5", "es2015.promise", "dom"],
         "sourceMap": true,
-        "removeComments": true
+        "removeComments": true,
+        "allowSyntheticDefaultImports": true
     },
     "exclude": [
       "node_modules", 
