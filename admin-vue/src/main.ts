@@ -7,7 +7,5 @@ import store from './store/index'
 
 new Vue({
   router,
-  store,
-  el : '#app', 
-  template : '<router-view></router-view>'
-})
+  store
+}).$mount('#app')
