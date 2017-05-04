@@ -3,7 +3,12 @@
 </template>
 
 <script>
-  export default {}
+  export default {
+    created() {
+    },
+    mounted() {
+    }
+  }
 </script>
 
 <style lang="scss">

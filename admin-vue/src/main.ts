@@ -1,11 +1,19 @@
 declare var require: any
 
-import * as Vue from 'vue';
+import * as Vue from 'vue'
+import * as iView from 'iview'
 
 import router from './route'
-import store from './store/index'
+import store from './store'
+
+import './style/style.scss';
+
+Vue.use(iView);
 
 new Vue({
   router,
-  store
+  store,
+  components: {
+    ...iView
+  }
 }).$mount('#app')
