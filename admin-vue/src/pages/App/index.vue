@@ -34,6 +34,8 @@
     margin: 30px auto 20px;
     .nav-wrapper {
       float: left;
+      height: 100%;
+      background: #fff;
     }
     .content-wrapper {
       float: left;
