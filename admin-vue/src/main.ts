@@ -12,8 +12,5 @@ Vue.use(iView);
 
 new Vue({
   router,
-  store,
-  components: {
-    ...iView
-  }
+  store
 }).$mount('#app')
