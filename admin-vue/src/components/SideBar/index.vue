@@ -2,7 +2,7 @@
 </style>
 
 <template>
-  <Menu>
+  <Menu width="auto">
     <Menu-group v-for="group of menuGroups" v-bind:title="group.name">
       <Menu-item v-for="menu of group.menus" v-bind:name="menu.name">
         {{ menu.name }}

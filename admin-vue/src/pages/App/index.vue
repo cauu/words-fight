@@ -28,20 +28,20 @@
 
 <style lang="scss">
   .main-wrapper {
+    display: flex;
     height: 500px;
     width: 92%;
     background: black;
     margin: 30px auto 20px;
+    justify-content: space-between;
     .nav-wrapper {
-      float: left;
       height: 100%;
       background: #fff;
+      width: 18%;
     }
     .content-wrapper {
-      float: left;
       background:red;
-      height: 200px;
-      width: 200px;
+      width: 82%;
     }
   }
 </style>
