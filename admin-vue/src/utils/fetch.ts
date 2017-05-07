@@ -1,4 +1,4 @@
-import 'isomorphic-param'
+import 'isomorphic-fetch'
 import * as param from  'jquery-param'
 import * as _ from 'underscore'
 
