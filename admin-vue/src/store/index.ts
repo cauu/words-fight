@@ -8,7 +8,7 @@ import question from './modules/question';
 
 Vue.use(VueX);
 
-const debug = process.env.NODE_ENV !== 'production';
+const debug = process.env !== 'production';
 
 export default new VueX.Store({
   strict: debug,

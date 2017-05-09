@@ -20,7 +20,7 @@ function parseJSON(response) {
   return response.json().then(resJson => resJson);
 }
 
-export function post(url, params) {
+export function post(url, params={}) {
   const config = {
     method: 'post',
     headers: {

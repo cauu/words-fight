@@ -15,8 +15,8 @@
 <script>
   declare let require: any
   // import Header from '../../components/Header/index';
-  var headerTop = require('components/Header').default
-  var sideBar = require('components/SideBar').default
+  import headerTop from 'components/Header'
+  import sideBar from 'components/SideBar'
 
   export default {
     components: {
