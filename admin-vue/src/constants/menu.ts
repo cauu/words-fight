@@ -1,19 +1,10 @@
 export default [
   {
-    name: '问题管理',
+    name: '书本管理',
     menus: [
       {
-        name: '问题列表',
-        to: ''
-      }
-    ]
-  },
-  {
-    name: '场景管理',
-    menus: [
-      {
-        name: '场景列表',
-        to: ''
+        name: '书本列表',
+        to: 'book'
       }
     ]
   },
@@ -22,16 +13,25 @@ export default [
     menus: [
       {
         name: '关卡列表',
-        to: ''
+        to: 'level'
       }
     ]
   },
   {
-    name: '书本管理',
+    name: '场景管理',
     menus: [
       {
-        name: '书本列表',
-        to: ''
+        name: '场景列表',
+        to: 'scene'
+      }
+    ]
+  },
+  {
+    name: '问题管理',
+    menus: [
+      {
+        name: '问题列表',
+        to: 'question'
       }
     ]
   }

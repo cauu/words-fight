@@ -6,7 +6,7 @@
         <side-bar></side-bar>
       </div>
       <div class="content-wrapper">
-        <router-view></router-view>
+        <router-view keep-alive></router-view>
       </div>
     </div>
   </div>
@@ -40,7 +40,7 @@
       width: 18%;
     }
     .content-wrapper {
-      background:red;
+      background: #fff;
       width: 82%;
     }
   }

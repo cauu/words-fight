@@ -5,6 +5,7 @@ import Router from 'vue-router'
 // var Router = require('vue-router').default;
 var App = require('./pages/App').default
 var Question = require('./pages/Question').default
+var Book = require('./pages/Book').default
 
 Vue.use(Router);
 
@@ -17,7 +18,11 @@ export default new Router({
       component: App,
       children: [
         {
-          path: 'questions',
+          path: 'book',
+          component: Book
+        },
+        {
+          path: 'question',
           component: Question
         }
       ]
