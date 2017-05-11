@@ -2,13 +2,15 @@
   <div>
     <Table
       v-bind:columns="columns"
-      :data="content"
+      :data="books"
       >
     </Table>
   </div>
 </template>
 
 <script>
+  import { mapState, mapMutations } from 'vuex'
+
   export default {
     data() {
       const columns:any = [
@@ -38,24 +40,19 @@
         }
       ]
 
-      const content = [
-        {
-          id: 1,
-          title: '冰雪奇缘'
-        }
-      ]
-
       return {
-        columns,
-        content
+        columns
       }
     },
+    computed: mapState({
+      books: (state: any) => state.book.all
+    }),
     methods: {
       onShowLevel (index) {
         /**@desc 
          * Go to level page of specific book
          * */
-        this.$router.push(`/level/${this.content[index].id}`)
+        this.$router.push(`/level/${this.books[index].id}`)
       }
     }
   }
