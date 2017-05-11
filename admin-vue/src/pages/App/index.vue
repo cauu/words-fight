@@ -1,3 +1,31 @@
+<style lang="scss">
+  .main-wrapper {
+    display: flex;
+    height: 500px;
+    width: 92%;
+    background: black;
+    margin: 30px auto 20px;
+    justify-content: space-between;
+    .nav-wrapper {
+      height: 100%;
+      background: #fff;
+      width: 17%;
+      border-right: 1px solid #d7dde4;
+      .ivu-menu-item {
+        border-right: 0!important;
+      }
+      .ivu-menu-light:after {
+        background: transparent;
+      }
+    }
+    .content-wrapper {
+      background: #fff;
+      width: 83%;
+      padding: 20px 25px;
+    }
+  }
+</style>
+
 <template>
   <div>
     <header-top></header-top>
@@ -25,23 +53,3 @@
     }
   }
 </script>
-
-<style lang="scss">
-  .main-wrapper {
-    display: flex;
-    height: 500px;
-    width: 92%;
-    background: black;
-    margin: 30px auto 20px;
-    justify-content: space-between;
-    .nav-wrapper {
-      height: 100%;
-      background: #fff;
-      width: 18%;
-    }
-    .content-wrapper {
-      background: #fff;
-      width: 82%;
-    }
-  }
-</style>

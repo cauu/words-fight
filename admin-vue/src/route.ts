@@ -22,7 +22,7 @@ export default new Router({
           component: Book
         },
         {
-          path: 'question',
+          path: 'level/:bid',
           component: Question
         }
       ]
