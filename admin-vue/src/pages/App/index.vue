@@ -41,15 +41,17 @@
 </template>
 
 <script>
-  declare let require: any
-  // import Header from '../../components/Header/index';
+  import Vue from 'vue'
+  import Component from 'vue-class-component'
   import headerTop from 'components/Header'
   import sideBar from 'components/SideBar'
 
-  export default {
+  @Component({
     components: {
       headerTop,
       sideBar
     }
+  })
+  export default class App extends Vue {
   }
 </script>

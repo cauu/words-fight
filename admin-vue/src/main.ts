@@ -1,7 +1,7 @@
 declare var require: any
 
-import * as Vue from 'vue'
-import * as iView from 'iview'
+import Vue from 'vue'
+import iView from 'iview'
 
 import router from './route'
 import store from './store'

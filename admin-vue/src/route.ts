@@ -1,11 +1,14 @@
 declare var require: any
 
-import * as Vue from 'vue';
+import Vue from 'vue';
 import Router from 'vue-router'
-// var Router = require('vue-router').default;
-var App = require('./pages/App').default
-var Question = require('./pages/Question').default
-var Book = require('./pages/Book').default
+
+/**
+ * @desc import vue single file component
+ */
+const App = require('./pages/App').default
+const Question = require('./pages/Question').default
+const Book = require('./pages/Book').default
 
 Vue.use(Router);
 
