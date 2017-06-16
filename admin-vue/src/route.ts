@@ -6,9 +6,10 @@ import Router from 'vue-router'
 /**
  * @desc import vue single file component
  */
-const App = require('./pages/App').default
-const Question = require('./pages/Question').default
-const Book = require('./pages/Book').default
+const App = require('pages/app').default
+const BookList = require('pages/book-list').default
+const LevelList = require('pages/level-list').default
+const Question = require('pages/question-list').default
 
 Vue.use(Router);
 
@@ -22,11 +23,11 @@ export default new Router({
       children: [
         {
           path: 'book',
-          component: Book
+          component: BookList
         },
         {
           path: 'level/:bid',
-          component: Question
+          component: LevelList
         }
       ]
     }

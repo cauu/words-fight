@@ -1,20 +1,38 @@
 <template>
   <div>
-    <Table
-      v-bind:columns="columns"
-      :data="books"
-      >
-    </Table>
+    <section class="content-head-wrapper">
+      <Row>
+        <Col span="22">
+          <Breadcrumb>
+            <Breadcrumb-item href="/book">书本</Breadcrumb-item>
+          </Breadcrumb>
+        </Col>
+        <Col span="2">
+          <Button type="primary">
+            创建书本
+          </Button>
+        </Col>
+      </Row>
+    </section>
+    <section class="content-main-wrapper">
+      <Table
+        v-bind:columns="columns"
+        :data="books"
+        >
+      </Table>
+    </section>
   </div>
 </template>
+
+<style>
+</style>
 
 <script>
   import Vue from 'vue'
   import Component from 'vue-class-component'
   import { State } from 'vuex-class'
 
-  @Component({
-  })
+  @Component
   export default class BookList extends Vue {
     columns:Array<any> = [
       {
@@ -27,7 +45,7 @@
       },
       {
         title: '操作',
-        key: 'action',
+        key: 'operation',
         width: 150,
         align: 'center',
         render (row, columns, index) {
@@ -45,7 +63,7 @@
 
     @State(state => state.book.all) books
 
-    onShowLevel (index) {
+    onShowLevel (index): void {
       /**@desc 
        * Go to level page of specific book
        * */
@@ -53,6 +71,3 @@
     }
   }
 </script>
-
-<style>
-</style>
