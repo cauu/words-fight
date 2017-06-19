@@ -4,11 +4,11 @@
       <Row>
         <Col span="22">
           <Breadcrumb>
-            <Breadcrumb-item href="/book">书本</Breadcrumb-item>
+            <Breadcrumb-item>书本</Breadcrumb-item>
           </Breadcrumb>
         </Col>
         <Col span="2">
-          <Button type="primary">
+          <Button @click="navTo('/book/edit')" type="primary">
             创建书本
           </Button>
         </Col>
@@ -53,8 +53,15 @@
             <i-button 
               type="primary"
               size="small"
-              @click="onShowLevel(${index})">
-              查看
+              @click="toLevelList(${index})">
+              查看关卡
+            </i-button>
+            <i-button
+              type="ghost"
+              size="small"
+              @click="navTo('/book/edit/${row.id}')"
+              >
+              修改
             </i-button>
           `
         }
@@ -63,11 +70,15 @@
 
     @State(state => state.book.all) books
 
-    onShowLevel (index): void {
+    navTo (url): void {
+      this.$router.push(url);
+    }
+
+    toLevelList (index): void {
       /**@desc 
        * Go to level page of specific book
        * */
-      this.$router.push(`/level/${this.books[index].id}`)
+      this.$router.push(`/level/list/${this.books[index].id}`)
     }
   }
 </script>

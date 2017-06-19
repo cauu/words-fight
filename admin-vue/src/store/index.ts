@@ -6,6 +6,7 @@ import VueX from 'vuex'
 
 import question from './modules/question'
 import book from './modules/book'
+import level from './modules/level'
 
 Vue.use(VueX)
 
@@ -15,6 +16,7 @@ export default new VueX.Store({
   strict: debug,
   modules: {
     book,
-    question
+    level,
+    question,
   }
 })
