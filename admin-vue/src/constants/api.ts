@@ -1,6 +1,6 @@
-import * as config from './config'
+import config from './config'
 
-const prefix = (url: String) => `config.host${url}`
+const prefix = (url: String) => `${config.host}${url}`
 
 export default {
   QUESTIONS: prefix('questions'),

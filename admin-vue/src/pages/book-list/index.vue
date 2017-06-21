@@ -30,7 +30,7 @@
 <script>
   import Vue from 'vue'
   import Component from 'vue-class-component'
-  import { State } from 'vuex-class'
+  import { State, Action } from 'vuex-class'
 
   @Component
   export default class BookList extends Vue {
@@ -69,6 +69,12 @@
     ]
 
     @State(state => state.book.all) books
+
+    @Action('listBooks') listBooks
+
+    created() {
+      this.listBooks()
+    }
 
     navTo (url): void {
       this.$router.push(url);

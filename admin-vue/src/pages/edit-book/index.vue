@@ -20,7 +20,7 @@
           >
           <Row>
             <Col span="8">
-              <Input type="text" placeholder="请输入书本名称" />
+              <Input v-model="bookName" type="text" placeholder="请输入书本名称" />
             </Col>
           </Row>
         </Form-item>
@@ -41,7 +41,7 @@
 <script>
   import Vue from 'vue'
   import Component from 'vue-class-component'
-  import { State } from 'vuex-class'
+  import { State, Action } from 'vuex-class'
 
   @Component ({
     props: {
@@ -49,16 +49,22 @@
     }
   })
   export default class EditBook extends Vue {
+    bookName: string = ''
+
     bid: string
 
     isEdit: boolean = !!this.bid
+
+    @Action('createBook') createBook
 
     onBack() {
       this.$router.push('/book/list')
     }
 
     onSubmit() {
-      console.log(this.isEdit, this.$props.bid, this.$router)
+      console.log(this.bookName)
+      // console.log(this.isEdit this.$props.bid, this.$router)
+      this.createBook(this.bookName)
     }
   }
 

@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch'
-import * as param from  'jquery-param'
-import * as _ from 'underscore'
+import param from  'jquery-param'
+import _ from 'underscore'
 
 interface ResponseError extends Error {
   response: Object

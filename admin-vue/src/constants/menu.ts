@@ -18,11 +18,19 @@ export default [
     ]
   },
   {
-    name: '对话管理',
+    name: '问题管理',
     menus: [
       {
-        name: '对话列表',
-        to: '/convs'
+        name: '问题列表',
+        to: '/question/list'
+      },
+      {
+        name: '创建问题',
+        to: '/question/edit'
+      },
+      {
+        name: '问题树列表',
+        to: '/quest-tree'
       }
     ]
   }

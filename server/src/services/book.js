@@ -1,12 +1,16 @@
 import mongoose, { Types } from 'mongoose';
 
+import { paginate } from '../utils/common';
+
 import Book from '../models/book';
 
-function getBooks({ pageNo, pageSize }) {
+async function getBooks({ pageNo, pageSize }) {
+  console.log(await Book.count().exec());
+  paginate(Book, {}, { pageNo, pageSize })
   return Book
     .find({})
     .skip((pageNo - 1) * pageSize)
-    .limit(pageSize)
+    .limit(pageSize * 1)
     .sort({ createdAt: -1 })
     .exec()
   ;
