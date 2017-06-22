@@ -5,7 +5,6 @@ import { paginate } from '../utils/common';
 import Book from '../models/book';
 
 async function getBooks({ pageNo, pageSize }) {
-  console.log(await Book.count().exec());
   paginate(Book, {}, { pageNo, pageSize })
   return Book
     .find({})

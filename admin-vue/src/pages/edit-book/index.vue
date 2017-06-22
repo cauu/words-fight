@@ -64,7 +64,9 @@
     onSubmit() {
       console.log(this.bookName)
       // console.log(this.isEdit this.$props.bid, this.$router)
-      this.createBook(this.bookName)
+      this.createBook(this.bookName, () => {
+        this.onBack()
+      })
     }
   }
 

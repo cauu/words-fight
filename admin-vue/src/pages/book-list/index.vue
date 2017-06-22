@@ -36,8 +36,8 @@
   export default class BookList extends Vue {
     columns:Array<any> = [
       {
-        title: '序号',
-        key: 'id'
+        title: 'ID',
+        key: '_id'
       },
       {
         title: '书名',

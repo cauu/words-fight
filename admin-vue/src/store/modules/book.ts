@@ -17,9 +17,12 @@ const actions = {
 
     commit('setBookList', res.result)
   },
-  async createBook({ commit }, title) {
+  async createBook({ commit }, title, cb) {
     console.log(title)
+
     await post(API.BOOKS, { title })
+
+    cb && cb();
   }
 }
 
