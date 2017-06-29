@@ -1,26 +1,66 @@
 import API from '../../constants/api'
-import { get, post } from '../../utils/fetch'
+import { get, post, put } from '../../utils/fetch'
 
 const state = {
-  all: []
+  list: [],
+  pagination: {},
+  detail: {
+    title: ''
+  }
 }
 
 const mutations = {
   setBookList(state, payload) {
-    state.all = payload
+    const{ 
+      list,
+      pagination
+    } = payload
+
+    state.list = list 
+    state.pagination = pagination 
+  },
+  setBookDetail(state, payload) {
+    state.detail = payload
+  },
+  resetBookDetail(state) {
+    state.detail = {
+      title: ""
+    }
+  },
+  updateDetail(state, payload) {
+    state.detail = {
+      ...state.detail,
+      ...payload
+    }
   }
 }
 
 const actions = {
-  async listBooks({ commit }) {
-    const res = await get(API.BOOKS, { pageSize: 10, pageNo: 1 })
+  async listBooks({ commit }, { pageSize, pageNo }) {
+    const res = await get(API.BOOKS, { pageSize, pageNo })
 
-    commit('setBookList', res.result.data)
+    commit(
+      'setBookList', 
+      {
+        list: res.result.data,
+        pagination: res.result.pagination
+      }
+    )
   },
-  async createBook({ commit }, { title, cb }) {
-    await post(API.BOOKS, { title })
+  async createBook({ commit }, { book, cb }) {
+    await post(API.BOOKS, book)
 
-    cb && cb();
+    cb && cb()
+  },
+  async updateBook({ commit }, { book, cb }) {
+    await put(API.BOOKS, book)
+    
+    cb && cb()
+  },
+  async getBookById({ commit }, _id) {
+    const res = await get(API.BOOKS, { _id })
+
+    commit('setBookDetail', res.result.data[0])
   }
 }
 

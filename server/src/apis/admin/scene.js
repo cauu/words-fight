@@ -3,7 +3,8 @@ import {
   getScenes,
   addScene,
   delScene,
-  updateScene
+  updateScene,
+  getScenePagination
 } from '../../services/scene';
 import { validator } from '../../utils/common';
 
@@ -14,9 +15,14 @@ async function listScenes({ query, checkQuery }) {
     checkQuery('lid').optional()
   );
 
-  let scenes = await getScenes(query);
+  let data = await getScenes(query);
 
-  return successDec(scenes);
+  let pagination = await getScenePagination(query);
+
+  return successDec({
+    data,
+    pagination
+  });
 }
 
 async function createScene({ request, checkBody }) {

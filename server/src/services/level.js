@@ -1,6 +1,12 @@
 import mongoose, { Types } from 'mongoose';
 
+import { getPagination } from '../services/global';
+
 import Level from '../models/level';
+
+async function getLevelPagination(query) {
+  return await getPagination(Level, query);
+}
 
 function getLevels({ pageNo, pageSize }) {
   return Level
@@ -37,5 +43,6 @@ export {
   addLevel,
   getLevel,
   delLevel,
-  updateLevel
+  updateLevel,
+  getLevelPagination
 };

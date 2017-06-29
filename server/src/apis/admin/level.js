@@ -4,7 +4,8 @@ import {
   getLevel,
   addLevel,
   delLevel,
-  updateLevel
+  updateLevel,
+  getLevelPagination
 } from '../../services/level';
 import { validator } from '../../utils/common';
 
@@ -14,9 +15,14 @@ async function listLevels({ query, checkQuery }) {
     checkQuery('pageSize').ge(1),
   );
 
-  let levels = await getLevels(query);
+  let data = await getLevels(query);
 
-  return successDec(levels);
+  let pagination = await getLevelPagination(query);
+
+  return successDec({
+    data,
+    pagination
+  });
 }
 
 async function createLevel({ request, checkBody }) {

@@ -15,12 +15,12 @@
       <Form
         :label-width="60">
         <Form-item
-          :key="item"
+          key="item"
           label="名称"
           >
           <Row>
             <Col span="8">
-              <Input v-model="bookName" type="text" placeholder="请输入书本名称" />
+              <Input v-model="title" type="text" placeholder="请输入书本名称" />
             </Col>
           </Row>
         </Form-item>
@@ -41,7 +41,7 @@
 <script>
   import Vue from 'vue'
   import Component from 'vue-class-component'
-  import { State, Action } from 'vuex-class'
+  import { State, Action, Mutation } from 'vuex-class'
 
   @Component ({
     props: {
@@ -49,24 +49,51 @@
     }
   })
   export default class EditBook extends Vue {
-    bookName: string = ''
-
     bid: string
 
     isEdit: boolean = !!this.bid
 
+    @State(state => state.book.detail) detail
+
     @Action('createBook') createBook
+
+    @Action('updateBook') updateBook
+
+    @Action('getBookById') getBookById
+
+    @Mutation('resetBookDetail') resetBookDetail
+
+    @Mutation('updateDetail') updateDetail
+
+    get title() {
+      return this.detail.title
+    }
+
+    set title(value) {
+      this.updateDetail({ title: value })
+    }
+
+    mounted() {
+      if(this.bid) {
+        this.getBookById(this.bid)
+      } else {
+        this.resetBookDetail()
+      }
+    }
 
     onBack() {
       this.$router.push('/book/list')
     }
 
     onSubmit() {
-      console.log(this.bookName)
-      // console.log(this.isEdit this.$props.bid, this.$router)
-      this.createBook(this.bookName, () => {
-        this.onBack()
-      })
+      const editFunc: Function = this.bid ? this.updateBook: this.createBook
+
+      editFunc(
+        { 
+          book: this.detail,
+          cb: () => { this.onBack() }
+        }
+      )
     }
   }
 

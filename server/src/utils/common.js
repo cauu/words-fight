@@ -6,22 +6,6 @@ function validator(...validateFunc) {
   }
 }
 
-async function paginate(Model, query, { pageSize, pageNo }) {
-  const total = await Model
-    .count(query)
-    // .skip((pageNo - 1) * pageSize)
-    // .limit(pageSize * 1)
-    .exec()
-  ;
-
-  console.log(total);
-
-  return {
-    totalPages: Math.ceil(total/pageSize)
-  };
-}
-
 export {
-  validator,
-  paginate
+  validator
 };

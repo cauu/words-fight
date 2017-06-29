@@ -8,18 +8,25 @@
           </Breadcrumb>
         </Col>
         <Col span="2">
-          <Button @click="navTo('/book/edit')" type="primary">
+          <Button @click="toCreate" type="primary">
             创建书本
           </Button>
         </Col>
       </Row>
     </section>
     <section class="content-main-wrapper">
-      <Table
-        v-bind:columns="columns"
-        :data="books"
-        >
-      </Table>
+      <div class="paginate-table-wrapper">
+        <Table
+          :columns="columns"
+          :data="books"
+          />
+        <Page
+          :current="pagination.pageNo"
+          :page-size="pagination.pageSize"
+          :total="pagination.total"
+          @on-change="onPaginate"
+          />
+      </div>
     </section>
   </div>
 </template>
@@ -32,7 +39,13 @@
   import Component from 'vue-class-component'
   import { State, Action } from 'vuex-class'
 
-  @Component
+  import paginateTable from 'components/PaginateTable'
+
+  @Component({
+    components: {
+      paginateTable
+    }
+  })
   export default class BookList extends Vue {
     columns:Array<any> = [
       {
@@ -48,7 +61,7 @@
         key: 'operation',
         width: 150,
         align: 'center',
-        render (row, columns, index) {
+        render: (row, columns, index) => {
           return `
             <i-button 
               type="primary"
@@ -59,7 +72,7 @@
             <i-button
               type="ghost"
               size="small"
-              @click="navTo('/book/edit/${row.id}')"
+              @click="toEdit(${index})"
               >
               修改
             </i-button>
@@ -68,23 +81,36 @@
       }
     ]
 
-    @State(state => state.book.all) books
+    @State(state => state.book.list) books
+
+    @State(state => state.book.pagination) pagination
 
     @Action('listBooks') listBooks
 
     created() {
-      this.listBooks()
+      this.listBooks({
+        pageSize: 10,
+        pageNo: 1
+      })
     }
 
-    navTo (url): void {
-      this.$router.push(url);
+    onPaginate(pageNo) {
+      this.listBooks({
+        pageSize: this.pagination.pageSize,
+        pageNo: pageNo
+      })
+    }
+
+    toCreate(): void {
+      this.$router.push(`/book/edit`)
+    }
+
+    toEdit(index): void {
+      this.$router.push(`/book/edit/${this.books[index]._id}`)
     }
 
     toLevelList (index): void {
-      /**@desc 
-       * Go to level page of specific book
-       * */
-      this.$router.push(`/level/list/${this.books[index].id}`)
+      this.$router.push(`/level/list/${this.books[index]._id}`)
     }
   }
 </script>

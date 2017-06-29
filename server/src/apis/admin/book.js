@@ -5,7 +5,7 @@ import {
   addBook,
   delBook,
   updateBook,
-  getBookAmount
+  getBookPagination
 } from '../../services/book';
 
 import { validator } from '../../utils/common';
@@ -18,7 +18,7 @@ async function listBooks({ query, checkQuery }) {
 
   let data = await getBooks(query);
 
-  let pagination = await getBookAmount(query);
+  let pagination = await getBookPagination(query);
 
   return successDec({
     data,
@@ -40,23 +40,25 @@ async function createBook({ request, checkBody }) {
 
 async function removeBook({ query, checkQuery }) {
   validator(
-    checkQuery('id').notEmpty()
+    checkQuery('_id').notEmpty()
   );
 
-  let { id } = query;
+  let { _id } = query;
   
-  let result = await delBook(id);
+  let result = await delBook(_id);
   
   return successDec(result);
 }
 
 async function modifyBook({ request, query, checkBody, checkQuery}) {
   validator(
-    checkQuery('id').notEmpty(),
+    checkBody('_id').notEmpty(),
     checkBody('title').optional()
   );
 
-  let result = await updateBook(id, request.body);
+  let { _id } = request.body
+
+  let result = await updateBook(_id, request.body)
 
   return successDec(result);
 }

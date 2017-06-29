@@ -1,6 +1,12 @@
 import mongoose, { Types } from 'mongoose';
 
+import { getPagination } from '../services/global';
+
 import Scene from '../models/scene';
+
+async function getScenePagination(query) {
+  return await  getPagination(Scene, query);
+}
 
 function getScenes({ pageNo, pageSize }) {
   return Scene
@@ -35,6 +41,7 @@ function updateScene(id, scene) {
 export {
   getScenes,
   getScene,
+  getScenePagination,
   addScene,
   delScene,
   updateScene

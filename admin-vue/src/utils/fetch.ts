@@ -20,6 +20,21 @@ function parseJSON(response) {
   return response.json().then(resJson => resJson);
 }
 
+export function put(url, params={}) {
+  const config = {
+    method: 'put',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+    body: JSON.stringify(params)
+  };
+
+  return fetch(url, config).then(checkStatus).then(parseJSON);
+}
+
+
 export function post(url, params={}) {
   const config = {
     method: 'post',
