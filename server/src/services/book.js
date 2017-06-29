@@ -1,15 +1,19 @@
 import mongoose, { Types } from 'mongoose';
 
+import { getPagination } from '../services/global';
+
 import { paginate } from '../utils/common';
 
 import Book from '../models/book';
 
+async function getBookAmount(query) {
+  return await getPagination(Book, query);
+}
+
 async function getBooks({ pageNo, pageSize }) {
-  paginate(Book, {}, { pageNo, pageSize })
   return Book
     .find({})
-    .skip((pageNo - 1) * pageSize)
-    .limit(pageSize * 1)
+    .paginate(pageNo, pageSize)
     .sort({ createdAt: -1 })
     .exec()
   ;
@@ -40,5 +44,6 @@ export {
   getBooks,
   addBook,
   delBook,
-  updateBook
+  updateBook,
+  getBookAmount
 };

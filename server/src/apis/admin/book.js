@@ -4,8 +4,10 @@ import {
   getBooks,
   addBook,
   delBook,
-  updateBook
+  updateBook,
+  getBookAmount
 } from '../../services/book';
+
 import { validator } from '../../utils/common';
 
 async function listBooks({ query, checkQuery }) {
@@ -14,9 +16,14 @@ async function listBooks({ query, checkQuery }) {
     checkQuery('pageSize').ge(1)
   );
 
-  let books = await getBooks(query);
+  let data = await getBooks(query);
 
-  return successDec(books);
+  let pagination = await getBookAmount(query);
+
+  return successDec({
+    data,
+    pagination
+  });
 }
 
 async function createBook({ request, checkBody }) {

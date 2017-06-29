@@ -7,6 +7,7 @@ import routes from './routes';
 import middlewares from './middlewares';
 import base from './config/base';
 import config from './config/config';
+import './utils/mongoose-pagination';
 
 const { mongodb } = config;
 mongoose.Promise = Promise;

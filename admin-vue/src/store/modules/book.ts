@@ -15,11 +15,9 @@ const actions = {
   async listBooks({ commit }) {
     const res = await get(API.BOOKS, { pageSize: 10, pageNo: 1 })
 
-    commit('setBookList', res.result)
+    commit('setBookList', res.result.data)
   },
-  async createBook({ commit }, title, cb) {
-    console.log(title)
-
+  async createBook({ commit }, { title, cb }) {
     await post(API.BOOKS, { title })
 
     cb && cb();
