@@ -1,5 +1,8 @@
-import API from '../../constants/api'
-import { get, post, put } from '../../utils/fetch'
+import { 
+  getBooks,
+  postBook,
+  putBook
+} from '../../services/book'
 
 const state = {
   list: [],
@@ -37,7 +40,7 @@ const mutations = {
 
 const actions = {
   async listBooks({ commit }, { pageSize, pageNo }) {
-    const res = await get(API.BOOKS, { pageSize, pageNo })
+    const res = await getBooks({ pageSize, pageNo })
 
     commit(
       'setBookList', 
@@ -48,17 +51,17 @@ const actions = {
     )
   },
   async createBook({ commit }, { book, cb }) {
-    await post(API.BOOKS, book)
+    await postBook(book)
 
     cb && cb()
   },
   async updateBook({ commit }, { book, cb }) {
-    await put(API.BOOKS, book)
+    await putBook(book)
     
     cb && cb()
   },
   async getBookById({ commit }, _id) {
-    const res = await get(API.BOOKS, { _id })
+    const res = await getBooks({ _id })
 
     commit('setBookDetail', res.result.data[0])
   }
