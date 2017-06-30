@@ -39,13 +39,8 @@
   import Component from 'vue-class-component'
   import { State, Action } from 'vuex-class'
 
-  import paginateTable from 'components/PaginateTable'
 
-  @Component({
-    components: {
-      paginateTable
-    }
-  })
+  @Component
   export default class BookList extends Vue {
     columns:Array<any> = [
       {

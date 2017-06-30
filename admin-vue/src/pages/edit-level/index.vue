@@ -16,12 +16,11 @@
       <Form
         :label-width="60">
         <Form-item
-          :key="item"
           label="名称"
           >
           <Row>
             <Col span="8">
-              <Input type="text" placeholder="请输入关卡名称" />
+              <Input v-model="title" type="text" placeholder="请输入关卡名称" />
             </Col>
           </Row>
         </Form-item>
@@ -42,7 +41,11 @@
 <script>
   import Vue from 'vue'
   import Component from 'vue-class-component'
-  import { State } from 'vuex-class'
+  import {
+    State,
+    Action,
+    Mutation
+  } from 'vuex-class'
 
   @Component({
     props: {
@@ -56,11 +59,49 @@
 
     isEdit = !!this.lid
 
+    get title() {
+      return this.editLevel.title
+    }
+
+    set title(title) {
+      this.updateEditLevel({ title })
+    }
+
+    @State(state => state.level.editLevel) editLevel
+
+    @Action('createLevel') createLevel
+
+    @Action('updateLevel') updateLevel
+
+    @Action('getLevelById') getLevelById
+
+    @Mutation('resetEditLevel') resetEditLevel
+
+    @Mutation('updateEditLevel') updateEditLevel
+
+    created() {
+      if(!!this.lid) {
+        this.getLevelById(this.lid)
+      } else {
+        this.resetEditLevel({
+          book: this.bid
+        })
+      }
+    }
+
     onBack() {
-      this.$router.push(`/level/list/${this.bid}`);
+      this.$router.push(`/level/list/${this.bid}`)
     }
 
     onSubmit() {
+      const editFunc: Function = this.lid ? this.updateLevel : this.createLevel
+
+      editFunc(
+        {
+          level: this.editLevel,
+          cb: () => this.onBack()
+        }
+      )
     }
   }
 

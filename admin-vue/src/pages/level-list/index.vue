@@ -32,7 +32,7 @@
 <script>
   import Vue from 'vue'  
   import Component from 'vue-class-component'
-  import { State } from 'vuex-class'
+  import { State, Action } from 'vuex-class'
 
   @Component({
     props: {
@@ -44,8 +44,8 @@
 
     columns = [
       {
-        title: '序号',
-        key: 'id'
+        title: 'ID',
+        key: '_id'
       },
       {
         title: '关卡名',
@@ -67,7 +67,7 @@
             <i-button
               type="ghost"
               size="small"
-              @click="toEdit(${row.id})"
+              @click="toEdit(${index})"
               >
               修改
             </i-button>
@@ -76,11 +76,20 @@
       }
     ]
 
-    @State(state => state.level.all) levels
+    @State(state => state.level.list) levels
 
-    toEdit(levelId) {
-      console.log(this);
-      this.$router.push(`/level/edit/${this.bid}/${levelId}`)
+    @Action('listLevels') listLevels
+
+    created() {
+      this.listLevels({
+        book: this.bid,
+        pageNo: 1,
+        pageSize: 10
+      })
+    }
+
+    toEdit(index) {
+      this.$router.push(`/level/edit/${this.bid}/${this.levels[index]._id}`)
     }
   }
 </script>

@@ -53,6 +53,14 @@
 
     isEdit: boolean = !!this.bid
 
+    get title() {
+      return this.detail.title
+    }
+
+    set title(value) {
+      this.updateDetail({ title: value })
+    }
+
     @State(state => state.book.detail) detail
 
     @Action('createBook') createBook
@@ -64,14 +72,6 @@
     @Mutation('resetBookDetail') resetBookDetail
 
     @Mutation('updateDetail') updateDetail
-
-    get title() {
-      return this.detail.title
-    }
-
-    set title(value) {
-      this.updateDetail({ title: value })
-    }
 
     mounted() {
       if(this.bid) {

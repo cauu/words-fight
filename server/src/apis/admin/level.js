@@ -52,12 +52,14 @@ async function removeLevel({ query, checkQuery }) {
 
 async function modifyLevel({ request, query, checkBody, checkQuery }) {
   validator(
-    checkQuery('id').notEmpty(),
+    checkBody('_id').notEmpty(),
     checkBody('title').optional(),
     checkBody('book').optional()
   );
 
-  let result = await updateLevel(id, request.body);
+  const { _id } = request.body;
+
+  let result = await updateLevel(_id, request.body);
 
   return successDec(result);
 }

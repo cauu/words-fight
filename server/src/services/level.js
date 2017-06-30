@@ -8,11 +8,10 @@ async function getLevelPagination(query) {
   return await getPagination(Level, query);
 }
 
-function getLevels({ pageNo, pageSize }) {
+function getLevels({ pageNo, pageSize, ...query }) {
   return Level
-    .find({})
-    .skip((pageNo - 1) * pageSize)
-    .limit(pageSize)
+    .find(query)
+    .paginate(pageNo, pageSize)
     .sort({ createdAt: -1 })
     .exec()
   ;
