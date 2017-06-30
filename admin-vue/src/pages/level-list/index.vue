@@ -61,13 +61,14 @@
             <i-button
               type="primary"
               size="small"
+              @click="toSceneList('${row._id}')"
               >
               查看场景
             </i-button>
             <i-button
               type="ghost"
               size="small"
-              @click="toEdit(${index})"
+              @click="toEdit('${row._id}')"
               >
               修改
             </i-button>
@@ -88,8 +89,12 @@
       })
     }
 
-    toEdit(index) {
-      this.$router.push(`/level/edit/${this.bid}/${this.levels[index]._id}`)
+    toEdit(lid) {
+      this.$router.push(`/level/edit/${this.bid}/${lid}`)
+    }
+
+    toSceneList(lid) {
+      this.$router.push(`/scene/list/${lid}`)
     }
   }
 </script>

@@ -14,11 +14,9 @@ const QuestionSchema = new Schema({
   fullSlug: { type: String },
   answers: [{
     text: { type: String },
-    isCorrect: { type: Boolean },
+    code: { type: Number },
     next: { type: Schema.Types.ObjectId, ref: 'Question' }
   }],
-  afterCorrect: { type: Schema.Types.ObjectId, ref: 'Question' },
-  afterError: { type: Schema.Types.ObjectId, ref: 'Question' },
   createdAt: { type: Number },
   updatedAt: { type: Number }
 });

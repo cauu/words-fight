@@ -14,6 +14,8 @@ const EditBook = require('pages/edit-book').default
 const LevelList = require('pages/level-list').default
 const EditLevel = require('pages/edit-level').default
 
+const SceneList = require('pages/scene-list').default
+
 const Question = require('pages/question-list').default
 
 Vue.use(Router);
@@ -43,6 +45,11 @@ export default new Router({
         {
           path: 'level/edit/:bid/:lid?',
           component: EditLevel,
+          props: true
+        },
+        {
+          path: 'scene/list/:lid',
+          component: SceneList,
           props: true
         }
       ]

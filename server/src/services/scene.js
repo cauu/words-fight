@@ -8,11 +8,10 @@ async function getScenePagination(query) {
   return await  getPagination(Scene, query);
 }
 
-function getScenes({ pageNo, pageSize }) {
+function getScenes({ pageNo, pageSize, ...query }) {
   return Scene
-    .find({})
-    .skip((pageNo - 1) * pageSize)
-    .limit(pageSize)
+    .find(query)
+    .paginate(pageNo, pageSize)
     .sort({ createdAt: -1 })
     .exec()
   ;

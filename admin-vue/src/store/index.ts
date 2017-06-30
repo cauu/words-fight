@@ -4,9 +4,11 @@ declare let require: any
 import Vue from 'vue'
 import VueX from 'vuex'
 
-import question from './modules/question'
 import book from './modules/book'
 import level from './modules/level'
+import scene from './modules/scene'
+
+import question from './modules/question'
 
 Vue.use(VueX)
 
@@ -18,5 +20,6 @@ export default new VueX.Store({
     book,
     level,
     question,
+    scene,
   }
 })

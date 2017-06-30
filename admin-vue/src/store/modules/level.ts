@@ -7,17 +7,7 @@ import {
 const state = {
   list: [],
   pagination: {},
-  editLevel: {},
-  all: [
-    {
-      id: 1,
-      title: '第一关'
-    },
-    {
-      id: 2,
-      title: '第二关'
-    }
-  ]
+  editLevel: {}
 }
 
 const mutations = {
@@ -28,7 +18,7 @@ const mutations = {
   setEditLevel(state, payload) {
     state.editLevel = payload
   },
-  resetEditLevel(state, payload) {
+  resetEditLevel(state, payload={}) {
     state.editLevel = {
       ...payload
     }
@@ -42,7 +32,7 @@ const mutations = {
 }
 
 const actions = {
-  async listLevels({ commit }, { book, pageSize, pageNo }) {
+  async listLevels({ commit }, { book, pageSize=10, pageNo=1 }) {
     const res = await getLevel({ book, pageSize, pageNo })
 
     commit(
