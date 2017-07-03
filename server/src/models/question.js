@@ -14,8 +14,12 @@ const QuestionSchema = new Schema({
   fullSlug: { type: String },
   answers: [{
     text: { type: String },
+    code: { type: Number }
+  }],
+  next: [{
     code: { type: Number },
-    next: { type: Schema.Types.ObjectId, ref: 'Question' }
+    shouldLeave: { type: Boolean },
+    question: { type: Schema.Types.ObjectId, ref: 'Question' }
   }],
   createdAt: { type: Number },
   updatedAt: { type: Number }

@@ -15,6 +15,7 @@ const LevelList = require('pages/level-list').default
 const EditLevel = require('pages/edit-level').default
 
 const SceneList = require('pages/scene-list').default
+const EditScene = require('pages/edit-scene').default
 
 const Question = require('pages/question-list').default
 
@@ -51,7 +52,12 @@ export default new Router({
           path: 'scene/list/:lid',
           component: SceneList,
           props: true
-        }
+        },
+        {
+          path: 'scene/edit/:lid/:sid?',
+          component: EditScene,
+          props: true
+        },
       ]
     }
   ]

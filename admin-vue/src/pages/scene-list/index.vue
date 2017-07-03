@@ -10,7 +10,7 @@
           </Breadcrumb>
         </Col>
         <Col span="2">
-          <router-link to="">
+          <router-link :to="`/scene/edit/${lid}`">
             <Button type="primary">
               创建场景
             </Button>

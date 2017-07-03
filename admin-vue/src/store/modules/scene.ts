@@ -7,7 +7,11 @@ import {
 const state = {
   list: [],
   pagination: {},
-  editScene: {}
+  hehe: '123',
+  editScene: {
+    title: "test",
+    next: [{}, {}]
+  }
 }
 
 const mutations = {
@@ -20,6 +24,8 @@ const mutations = {
   },
   resetEditScene(state, payload={}) {
     state.editScene = {
+      title: '',
+      next: [],
       ...payload
     }
   },
