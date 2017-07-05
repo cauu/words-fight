@@ -28,13 +28,13 @@
             </Col>
           </Row>
         </Form-item>
-        <content-box>
+        <content-box title="场景跳转">
           <Form-item 
             v-for="(nextItem, idx) in nextScene"
             >
             <Row>
               <label>
-                {{ `第${idx+1}` }}
+                {{ `规则${idx+1}` }}
               </label>
             </Row>
             <Row gutter="16">
@@ -99,9 +99,6 @@
     @Mutation('resetEditScene') resetEditScene
 
     created() {
-      // if(!this.sid) {
-      //   this.resetEditScene()
-      // }
     }
   }
 
