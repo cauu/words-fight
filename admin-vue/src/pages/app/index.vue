@@ -1,13 +1,12 @@
 <style lang="scss">
   .main-wrapper {
     display: flex;
-    height: 500px;
     width: 92%;
     background: black;
     margin: 30px auto 20px;
     justify-content: space-between;
     .nav-wrapper {
-      height: 100%;
+      height: auto;
       background: #fff;
       width: 17%;
       border-right: 1px solid #d7dde4;

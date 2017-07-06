@@ -4,10 +4,6 @@ import { getPagination } from '../services/global';
 
 import Scene from '../models/scene';
 
-async function getScenePagination(query) {
-  return await  getPagination(Scene, query);
-}
-
 function getScenes({ pageNo, pageSize, ...query }) {
   return Scene
     .find(query)
@@ -27,6 +23,7 @@ function getScene(id) {
   return Scene.findOne({ _id: id }).exec();
 }
 
+
 function delScene(id) {
   return Scene.findOneAndRemove({ _id: id }).exec();
 }
@@ -40,7 +37,6 @@ function updateScene(id, scene) {
 export {
   getScenes,
   getScene,
-  getScenePagination,
   addScene,
   delScene,
   updateScene

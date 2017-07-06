@@ -34,6 +34,12 @@ const mutations = {
       ...state.editScene,
       ...payload
     }
+  },
+  pushNextRule() {
+    state.editScene.next.push([]);
+  },
+  popNextRule() {
+    state.editScene.next.pop();
   }
 }
 

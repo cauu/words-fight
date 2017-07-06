@@ -37,7 +37,7 @@
                 {{ `规则${idx+1}` }}
               </label>
             </Row>
-            <Row gutter="16">
+            <Row :gutter="16">
               <Col span="4">
                 <Input 
                   placeholder="code"
@@ -48,15 +48,39 @@
                   placeholder="对应场景"
                   />
               </Col>
+              <Col v-if="idx === nextScene.length - 1" span="2">
+                <Button 
+                  type="ghost"
+                  icon="close"
+                  shape="circle"
+                  @click="onDelNext"
+                  />
+              </Col>
+            </Row>
+          </Form-item>
+          <Form-item>
+            <Row style="margin-top: 10px">
+              <Button @click="onAddNext">
+                添加规则
+              </Button>
             </Row>
           </Form-item>
         </content-box>
+        <Form-item>
+          <Row>
+            <Button type="primary" @click="onSubmit">提交</Button>
+            <Button type="ghost" @click="onBack" style="margin-left:8px">返回</Button>
+          </Row>
+        </Form-item>
       </Form>
     </section>
   </div>
 </template>
 
-<style>
+<style lang="scss" scoped>
+  .content-box-wrapper {
+    margin-bottom: 20px;
+  }
 </style>
 
 <script>
@@ -98,7 +122,35 @@
 
     @Mutation('resetEditScene') resetEditScene
 
+    @Mutation('pushNextRule') pushNextRule
+
+    @Mutation('popNextRule') popNextRule
+
+    onAddNext() {
+      this.pushNextRule()
+    }
+
+    onDelNext() {
+      this.popNextRule()
+    }
+
+    onSubmit() {
+    }
+
+    onBack() {
+      this.$router.push(`/scene/list/${this.lid}`)
+    }
+
     created() {
+      const editFunc: Function = this.sid ? this.updateScene : this.createScene;
+
+      editFunc(
+        {
+          scene: this.editScene,
+          cb: () => {
+          }
+        }
+      )
     }
   }
 
