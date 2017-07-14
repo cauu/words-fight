@@ -9,8 +9,8 @@ const state = {
   all: {},
   pagination: {},
   editScene: {
-    title: "test",
-    next: [{}, {}]
+    title: "",
+    next: []
   }
 }
 

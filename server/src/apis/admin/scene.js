@@ -3,7 +3,8 @@ import {
   getScenes,
   addScene,
   delScene,
-  updateScene
+  updateScene,
+  getScenePagination
 } from '../../services/scene';
 import { validator } from '../../utils/common';
 
@@ -16,6 +17,8 @@ async function listScenes({ query, checkQuery }) {
 
   let data = await getScenes(query);
 
+  let pagination = await getScenePagination(query);
+
   return successDec({
     data,
     pagination
@@ -25,7 +28,9 @@ async function listScenes({ query, checkQuery }) {
 async function createScene({ request, checkBody }) {
   validator(
     checkBody('title').notEmpty(),
-    checkBody('nextSid').optional().notEmpty()
+    checkBody('level').notEmpty(),
+    checkBody('createdAt').default(new Date().getTime()),
+    checkBody('next').optional().notEmpty()
   );
   
   let scene = request.body;

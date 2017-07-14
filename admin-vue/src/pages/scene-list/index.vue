@@ -21,6 +21,7 @@
     <section class="content-main-wrapper">
       <Table
         :columns="columns"
+        :data="scenes"
         />
     </section>
   </div>
@@ -62,8 +63,13 @@
               type="primary"
               size="small"
               >
+              查看问题
             </i-button>
-            <i-button>
+            <i-button
+              type="ghost"
+              size="small"
+              >
+              修改
             </i-button>
           `
         }

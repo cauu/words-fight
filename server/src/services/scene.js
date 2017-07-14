@@ -13,6 +13,10 @@ function getScenes({ pageNo, pageSize, ...query }) {
   ;
 }
 
+async function getScenePagination(query) {
+  return await getPagination(Scene, query);
+}
+
 function addScene(scene) {
   return Scene
     .create(scene)
@@ -37,6 +41,7 @@ function updateScene(id, scene) {
 export {
   getScenes,
   getScene,
+  getScenePagination,
   addScene,
   delScene,
   updateScene

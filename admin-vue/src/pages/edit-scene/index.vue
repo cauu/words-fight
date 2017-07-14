@@ -33,17 +33,17 @@
         </Form-item>
         <content-box title="场景跳转">
           <Form-item 
-            v-repeat="nextSceneKeys"
+            v-for="(scene, index) in nextScene"
             >
             <Row>
               <label>
-                {{ `规则${$index}` }}
+                {{ `规则${index + 1}` }}
               </label>
             </Row>
             <Row :gutter="16">
               <Col span="4">
                 <Input 
-                  v-model="nextScene[$index].code"
+                  v-model="nextScene[index].code"
                   placeholder="code"
                   />
               </Col>
@@ -116,6 +116,9 @@
     }
 
     set title(value) {
+      this.updateEditScene({
+        title: value
+      });
     }
 
     get nextSceneKeys() {
@@ -126,15 +129,13 @@
       return this.editScene.next
     }
 
-    set nextScene(value) {
-      console.log(value)
-    }
-
     @State(state => state.scene.editScene) editScene
 
     @Action('createScene') createScene
 
     @Action('updateScene') updateScene
+
+    @Mutation('updateEditScene') updateEditScene
 
     @Mutation('resetEditScene') resetEditScene
 
@@ -152,10 +153,14 @@
 
     onSubmit() {
       const editFunc: Function = !!this.sid ? this.updateScene : this.createScene
+      const scene = this.editScene
+      if(!scene.level) {
+        scene.level = this.lid
+      }
 
       editFunc(
         {
-          scene: this.editScene,
+          scene,
           cb() {
             console.log('hehe')
           }
@@ -168,15 +173,6 @@
     }
 
     created() {
-      const editFunc: Function = this.sid ? this.updateScene : this.createScene;
-
-      editFunc(
-        {
-          scene: this.editScene,
-          cb: () => {
-          }
-        }
-      )
     }
   }
 
