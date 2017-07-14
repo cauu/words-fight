@@ -20,9 +20,9 @@
 
     @Action('listAllScenes') listAllScenes
 
-    created() {
+    mounted() {
       if(!this.scenes[this.lid]) {
-        this.listAllScenes({ level: lid })
+        this.listAllScenes({ level: this.lid })
       }
     }
   }

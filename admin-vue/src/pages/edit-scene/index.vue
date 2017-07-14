@@ -24,31 +24,33 @@
           label="名称">
           <Row>
             <Col span="8">
-              <Input placeholder="请输入场景名称" />
+              <Input 
+                placeholder="请输入场景名称"
+                v-model="title"
+                />
             </Col>
           </Row>
         </Form-item>
         <content-box title="场景跳转">
           <Form-item 
-            v-for="(nextItem, idx) in nextScene"
+            v-repeat="nextSceneKeys"
             >
             <Row>
               <label>
-                {{ `规则${idx+1}` }}
+                {{ `规则${$index}` }}
               </label>
             </Row>
             <Row :gutter="16">
               <Col span="4">
                 <Input 
+                  v-model="nextScene[$index].code"
                   placeholder="code"
                   />
               </Col>
               <Col span="4">
-                <Input 
-                  placeholder="对应场景"
-                  />
+                <scene-selector :lid="lid" />
               </Col>
-              <Col v-if="idx === nextScene.length - 1" span="2">
+              <Col v-if="index === nextScene.length - 1" span="2">
                 <Button 
                   type="ghost"
                   icon="close"
@@ -93,6 +95,7 @@
   } from 'vuex-class'
 
   import ContentBox from 'components/content-box'
+  import SceneSelector from 'components/scene-selector'
 
   @Component({
     props: {
@@ -100,18 +103,31 @@
       sid: String
     },
     components: {
-      'ContentBox': ContentBox
+      'ContentBox': ContentBox,
+      'SceneSelector': SceneSelector
     }
   })
   export default class EditScene extends Vue {
     lid: string
     sid: string
 
+    get title() {
+      return this.editScene.title
+    }
+
+    set title(value) {
+    }
+
+    get nextSceneKeys() {
+      return Object.keys(this.editScene.next);
+    }
+
     get nextScene() {
       return this.editScene.next
     }
 
     set nextScene(value) {
+      console.log(value)
     }
 
     @State(state => state.scene.editScene) editScene
@@ -135,6 +151,16 @@
     }
 
     onSubmit() {
+      const editFunc: Function = !!this.sid ? this.updateScene : this.createScene
+
+      editFunc(
+        {
+          scene: this.editScene,
+          cb() {
+            console.log('hehe')
+          }
+        }
+      )
     }
 
     onBack() {
