@@ -22,6 +22,7 @@ const mutations = {
   setAllScenes(state, payload) {
     const { level } = payload
     state.all[level] =  payload.all
+    console.log(state.all);
   },
   setEditScene(state, payload) {
     state.editScene = payload

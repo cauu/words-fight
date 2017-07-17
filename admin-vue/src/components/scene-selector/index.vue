@@ -1,5 +1,11 @@
 <template>
-  <Select>
+  <Select  :on-change="this.onSelect" v-model="scenes">
+    <Option
+      v-for="item in scenes[this.lid]"
+      :value="1"
+      :key="item._id">
+      {{ item.title }}
+    </Option>
   </Select>
 </template>
 
@@ -24,6 +30,10 @@
       if(!this.scenes[this.lid]) {
         this.listAllScenes({ level: this.lid })
       }
+    }
+
+    onSelect(value) {
+      console.log(value);
     }
   }
 </script>
