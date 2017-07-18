@@ -17,7 +17,7 @@ const EditLevel = require('pages/edit-level').default
 const SceneList = require('pages/scene-list').default
 const EditScene = require('pages/edit-scene').default
 
-const Question = require('pages/question-list').default
+const QuestionList = require('pages/question-list').default
 
 Vue.use(Router);
 
@@ -58,6 +58,11 @@ export default new Router({
           component: EditScene,
           props: true
         },
+        {
+          path: 'question/list/:sid',
+          component: QuestionList,
+          props: true
+        }
       ]
     }
   ]
