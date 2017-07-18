@@ -6,18 +6,28 @@ interface ResponseError extends Error {
   response: Object
 }
 
+function checkContentStatus(content) {
+  if (content.status === 'SUCCESS') {
+    return content
+  }
+
+  let error: ResponseError = <ResponseError>new Error(content.result);
+  error.response = content
+  throw error
+}
+
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
-    return response;
+    return response
   }
 
   let error: ResponseError = <ResponseError>new Error(response.statusText);
-  error.response = response;
-  throw error;
+  error.response = response
+  throw error
 }
 
 function parseJSON(response) {
-  return response.json().then(resJson => resJson);
+  return response.json().then(resJson => resJson)
 }
 
 export function put(url, params={}) {
@@ -29,9 +39,9 @@ export function put(url, params={}) {
     },
     credentials: 'include',
     body: JSON.stringify(params)
-  };
+  }
 
-  return fetch(url, config).then(checkStatus).then(parseJSON);
+  return fetch(url, config).then(checkStatus).then(parseJSON).then(checkContentStatus)
 }
 
 
@@ -46,7 +56,7 @@ export function post(url, params={}) {
     body: JSON.stringify(params)
   };
 
-  return fetch(url, config).then(checkStatus).then(parseJSON);
+  return fetch(url, config).then(checkStatus).then(parseJSON).then(checkContentStatus);
 }
 
 export function postForm(url, params) {
@@ -59,7 +69,7 @@ export function postForm(url, params) {
     body: param(params)
   };
 
-  return fetch(url, config).then(checkStatus).then(parseJSON);
+  return fetch(url, config).then(checkStatus).then(parseJSON).then(checkContentStatus);
 }
 
 export function get(url, query = {}) {
@@ -74,5 +84,5 @@ export function get(url, query = {}) {
 
   url = ( _.isEmpty(query) && `${url}` ) || `${url}?${param(query)}`;
 
-  return fetch(`${url}`, config).then(checkStatus).then(parseJSON);
+  return fetch(`${url}`, config).then(checkStatus).then(parseJSON).then(checkContentStatus);
 }

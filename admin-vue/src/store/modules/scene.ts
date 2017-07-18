@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import {
   getScene,
   postScene,
@@ -21,8 +22,7 @@ const mutations = {
   },
   setAllScenes(state, payload) {
     const { level } = payload
-    state.all[level] =  payload.all
-    console.log(state.all);
+    Vue.set(state.all, level, payload.all)
   },
   setEditScene(state, payload) {
     state.editScene = payload
@@ -41,7 +41,10 @@ const mutations = {
     }
   },
   pushNextRule() {
-    state.editScene.next.push([]);
+    state.editScene.next.push({
+      code: '',
+      scene: ''
+    });
   },
   popNextRule() {
     state.editScene.next.pop();
@@ -72,19 +75,19 @@ const actions = {
     )
   },
   async createScene({ commit }, { scene, cb }) {
-    await postScene(scene)
+    const result = await postScene(scene)
 
-    cb && cb()
+    cb && cb(result)
   },
   async updateScene({ commit }, { scene, cb }) {
-    await putScene(scene)
+    const result = await putScene(scene)
 
-    cb && cb()
+    cb && cb(result)
   },
   async getSceneById({ commit }, _id) {
     const res = await getScene({ _id })
 
-    commit('setEditScenel', res.result.data[0])
+    commit('setEditScene', res.result.data[0])
   }
 }
 

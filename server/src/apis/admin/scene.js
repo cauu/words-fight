@@ -54,11 +54,15 @@ async function removeScene({ query, checkQuery }) {
 
 async function modifyScene({ request, query, checkQuery, checkBody }) {
   validator(
-    checkQuery('id').notEmpty(),
+    checkBody('_id').notEmpty(),
     checkBody('title').optional()
   );
 
-  let result = await updateScene(id, request.body);
+  const { _id } = request.body;
+
+  console.log(_id);
+
+  let result = await updateScene(_id, request.body);
 
   return successDec(result);
 }

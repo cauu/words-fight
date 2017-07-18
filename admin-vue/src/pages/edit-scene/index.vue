@@ -33,7 +33,7 @@
         </Form-item>
         <content-box title="场景跳转">
           <Form-item 
-            v-for="(scene, index) in nextScene"
+            v-for="(next, index) in nextScene"
             >
             <Row>
               <label>
@@ -43,12 +43,17 @@
             <Row :gutter="16">
               <Col span="4">
                 <Input 
-                  v-model="nextScene[index].code"
+                  :value="next.code"
                   placeholder="code"
+                  @on-change="(event) => onInputCode(event, index)"
                   />
               </Col>
               <Col span="4">
-                <scene-selector :lid="lid" />
+                <scene-selector
+                  :value="next.scene"
+                  :on-change="(value) => onSceneSelect(value, index)"
+                  :lid="lid"
+                  />
               </Col>
               <Col v-if="index === nextScene.length - 1" span="2">
                 <Button 
@@ -97,10 +102,18 @@
   import ContentBox from 'components/content-box'
   import SceneSelector from 'components/scene-selector'
 
+  interface IViewMessage {
+    info: Function,
+    success: Function,
+    warning: Function,
+    error: Function,
+    loading: Function
+  }
+
   @Component({
     props: {
       lid: String,
-      sid: String
+      sid: String,
     },
     components: {
       'ContentBox': ContentBox,
@@ -110,6 +123,7 @@
   export default class EditScene extends Vue {
     lid: string
     sid: string
+    $Message: IViewMessage
 
     get title() {
       return this.editScene.title
@@ -129,11 +143,17 @@
       return this.editScene.next
     }
 
+    set nextScene(value) {
+      console.log(value)
+    }
+
     @State(state => state.scene.editScene) editScene
 
     @Action('createScene') createScene
 
     @Action('updateScene') updateScene
+
+    @Action('getSceneById') getSceneById
 
     @Mutation('updateEditScene') updateEditScene
 
@@ -142,6 +162,39 @@
     @Mutation('pushNextRule') pushNextRule
 
     @Mutation('popNextRule') popNextRule
+
+    mounted() {
+      if(!!this.sid) {
+        this.getSceneById(this.sid);
+      }
+    }
+
+    onInputCode(event, index) {
+      const next = [...this.editScene.next]
+      const code = event.target.value
+
+      next[index] = {
+        code,
+        scene: this.editScene.next[index].scene,
+      }
+
+      this.updateEditScene({
+        next
+      })
+    }
+
+    onSceneSelect(scene, index) {
+      const next = [...this.editScene.next]
+
+      next[index] = {
+        code: this.editScene.next[index].code,
+        scene
+      }
+
+      this.updateEditScene({
+        next
+      })
+    }
 
     onAddNext() {
       this.pushNextRule()
@@ -161,8 +214,11 @@
       editFunc(
         {
           scene,
-          cb() {
-            console.log('hehe')
+          cb: (res) => {
+            let msg= (title) => !!this.sid ? `场景${title}更新成功` : `场景${title}创建成功`
+            const { result } = res
+            this.$Message.success(msg(result.title))
+            this.onBack()
           }
         }
       )
@@ -171,9 +227,5 @@
     onBack() {
       this.$router.push(`/scene/list/${this.lid}`)
     }
-
-    created() {
-    }
   }
-
 </script>

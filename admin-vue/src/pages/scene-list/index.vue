@@ -68,6 +68,7 @@
             <i-button
               type="ghost"
               size="small"
+              @click="toEdit('${row._id}')"
               >
               修改
             </i-button>
@@ -80,12 +81,16 @@
 
     @Action('listScenes') listScenes
 
-    created() {
+    mounted() {
       this.listScenes({
         level: this.lid,
         pageNo: 1,
         pageSize: 10
       })
+    }
+
+    toEdit(sid) {
+      this.$router.push(`/scene/edit/${this.lid}/${sid}`)
     }
   }
 </script>
