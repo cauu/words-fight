@@ -135,10 +135,6 @@
       });
     }
 
-    get nextSceneKeys() {
-      return Object.keys(this.editScene.next);
-    }
-
     get nextScene() {
       return this.editScene.next
     }

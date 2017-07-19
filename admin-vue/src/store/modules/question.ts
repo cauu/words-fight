@@ -22,7 +22,7 @@ const state = {
   editQuestion: {
     title: "",
     next: [],
-    answer: []
+    answers: []
   }
 }
 
@@ -59,13 +59,13 @@ const mutations = {
     state.editQuestion.next.pop()
   },
   pushAnswer() {
-    state.editQuestion.answer.push({
+    state.editQuestion.answers.push({
       code: '',
       text: ''
     })
   },
   popAnswer() {
-    state.editQuestion.answer.pop()
+    state.editQuestion.answers.pop()
   }
 }
 

@@ -11,11 +11,11 @@
           </Breadcrumb>
         </Col>
         <Col span="2">
-          <route-link>
+          <router-link :to="`/question/edit/${sid}`">
             <Button type="primary">
               创建问题
             </Button>
-          </route-link>
+          </router-link>
         </Col>
       </Row>
     </section>
