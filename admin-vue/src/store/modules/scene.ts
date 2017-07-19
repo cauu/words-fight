@@ -44,10 +44,10 @@ const mutations = {
     state.editScene.next.push({
       code: '',
       scene: ''
-    });
+    })
   },
   popNextRule() {
-    state.editScene.next.pop();
+    state.editScene.next.pop()
   }
 }
 

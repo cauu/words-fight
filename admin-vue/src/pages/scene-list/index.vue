@@ -62,6 +62,7 @@
             <i-button
               type="primary"
               size="small"
+              @click="toQuestionList('${row._id}')"
               >
               查看问题
             </i-button>
@@ -91,6 +92,10 @@
 
     toEdit(sid) {
       this.$router.push(`/scene/edit/${this.lid}/${sid}`)
+    }
+
+    toQuestionList(sid) {
+      this.$router.push(`/question/list/${sid}`);
     }
   }
 </script>

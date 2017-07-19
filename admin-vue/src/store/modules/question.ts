@@ -20,7 +20,9 @@ const state = {
   pagination: {},
 
   editQuestion: {
-    title: ""
+    title: "",
+    next: [],
+    answer: []
   }
 }
 
@@ -38,23 +40,57 @@ const mutations = {
   resetEditQuestion(state, payload={}) {
     state.editQuestion = {
       title: '',
-      anwser: [],
+      answer: [],
       next: []
     }
   },
   updateEditQuestion(state, payload) {
+    state.editQuestion = {
+    }
+  },
+  pushNextRule() {
+    state.editQuestion.next.push({
+      shouldLeave: false,
+      code: '',
+      question: ''
+    })
+  },
+  popNextRule() {
+    state.editQuestion.next.pop()
+  },
+  pushAnswer() {
+    state.editQuestion.answer.push({
+      code: '',
+      text: ''
+    })
+  },
+  popAnswer() {
+    state.editQuestion.answer.pop()
   }
 }
 
 const actions = {
-  async listAllQuestions({ commit }, { question, pageSize = 100, pageNo = 1}) {
-    const res = await getQuestions({ question, pageSize, pageNo })
+  async listAllQuestions({ commit }, { scene, pageSize = 100, pageNo = 1}) {
+    const res = await getQuestions({ scene, pageSize, pageNo })
 
     commit(
+      'setAllQuestions',
+      {
+        scene,
+        all: res.result.data
+      }
     )
   },
-  async listQuestions({ commit }, { question, pageSize = 10, pageNo = 1 }) {
-    const res = await getQuestions({ question, pageSize, pageNo })
+  async listQuestions({ commit }, { scene, pageSize = 10, pageNo = 1 }) {
+    const res = await getQuestions({ scene, pageSize, pageNo })
+
+    commit(
+      'setQuestionList',
+      {
+        list: res.result.data,
+        pagination: res.result.pagination
+      }
+    )
   },
   async createQuestion({ commit }, { question, cb }) {
     const result = await postQuestion(question)
@@ -69,7 +105,7 @@ const actions = {
   async getEditQuestion({ commit }, _id) {
     const res = await getQuestions({ _id })
 
-    commit('')
+    commit('setEditQuestion', res.result.data[0])
   }
 }
 

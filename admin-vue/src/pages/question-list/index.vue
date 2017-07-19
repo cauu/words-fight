@@ -6,7 +6,8 @@
           <Breadcrumb>
             <Breadcrumb-item href="/book/list">书本</Breadcrumb-item>
             <Breadcrumb-item>关卡</Breadcrumb-item>
-            <Breadcumb-item>场景</Breadcumb-item>
+            <Breadcrumb-item>场景</Breadcrumb-item>
+            <Breadcrumb-item>问题</Breadcrumb-item>
           </Breadcrumb>
         </Col>
         <Col span="2">
@@ -21,6 +22,7 @@
     <section>
       <Table
         :columns="columns"
+        :data="questions"
         >
       </Table>
     </section>
@@ -28,21 +30,60 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      const columns:any = [
-        {
-          title: '序号',
-          key: 'id'
-        },
-        {
-          title: '书名',
-          key: 'title'
+  import Vue from 'vue'
+  import Component from 'vue-class-component'
+  import { State, Action, Mutation } from 'vuex-class'
+
+  @Component({
+    props: {
+      sid: String,
+      lid: String
+    }
+  })
+  export default class QuestionList extends Vue {
+    sid: string
+
+    columns = [
+      {
+        title: '问题名',
+        key: 'title'
+      },
+      {
+        title: '问题文本',
+        key: 'text'
+      },
+      {
+        title: '类型',
+        key: 'type'
+      },
+      {
+        title: '操作',
+        width: 150,
+        align: 'center',
+        key: 'operation',
+        render(row, columns, index) {
+          return `
+            <i-button
+              type="primary"
+              size="small"
+              >
+              修改
+            </i-button>
+          `
         }
-      ];
-      return {
-        columns
       }
+    ]
+
+    @State(state => state.question.list) questions
+
+    @Action('listQuestions') listQuestions
+
+    mounted() {
+      this.listQuestions({
+        scene: this.sid,
+        pageNo: 1,
+        pageSize: 10
+      })
     }
   }
 </script>
