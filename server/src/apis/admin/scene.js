@@ -60,8 +60,6 @@ async function modifyScene({ request, query, checkQuery, checkBody }) {
 
   const { _id } = request.body;
 
-  console.log(_id);
-
   let result = await updateScene(_id, request.body);
 
   return successDec(result);

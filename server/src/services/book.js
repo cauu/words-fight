@@ -17,6 +17,10 @@ function getBooks({ pageNo, pageSize, ...query }) {
   ;
 }
 
+function getBookById(id) {
+  return Book.findOne({ _id: id });
+}
+
 function addBook(book) {
   return Book
     .create(book)
@@ -43,5 +47,6 @@ export {
   addBook,
   delBook,
   updateBook,
-  getBookPagination
+  getBookPagination,
+  getBookById
 };

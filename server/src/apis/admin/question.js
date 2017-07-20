@@ -53,16 +53,16 @@ return successDec(result);
 
 async function modifyQuestion({ request, query, checkQuery, checkBody }) {
   validator(
-    checkQuery('id').notEmpty(),
+    checkBody('_id').notEmpty(),
     checkBody('title').optional().notEmpty(),
     checkBody('text').optional().notEmpty(),
     checkBody('type').optional().notEmpty(),
     checkBody('anwsers').optional()
   );
 
-  let { id } = query;
+  let { _id } = request.body;
 
-  let result = await updateQuestion(id, request.body);
+  let result = await updateQuestion(_id, request.body);
 
   return successDec(result);
 }

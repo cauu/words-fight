@@ -13,6 +13,10 @@ function getScenes({ pageNo, pageSize, ...query }) {
   ;
 }
 
+function getSceneById(id) {
+  return Scene.findOne({ _id: id });
+}
+
 async function getScenePagination(query) {
   return await getPagination(Scene, query);
 }
@@ -44,5 +48,6 @@ export {
   getScenePagination,
   addScene,
   delScene,
-  updateScene
+  updateScene,
+  getSceneById
 };

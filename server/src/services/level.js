@@ -17,6 +17,10 @@ function getLevels({ pageNo, pageSize, ...query }) {
   ;
 }
 
+function getLevelById(id) {
+  return Level.findOne({ _id: id });
+}
+
 function addLevel(level) {
   return Level
     .create(level)
@@ -43,5 +47,6 @@ export {
   getLevel,
   delLevel,
   updateLevel,
-  getLevelPagination
+  getLevelPagination,
+  getLevelById
 };

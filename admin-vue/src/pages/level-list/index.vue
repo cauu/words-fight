@@ -3,10 +3,9 @@
     <section class="content-head-wrapper">
       <Row>
         <Col span="22">
-          <Breadcrumb>
-            <Breadcrumb-item href="/book/list">书本</Breadcrumb-item>
-            <Breadcrumb-item>关卡</Breadcrumb-item>
-          </Breadcrumb>
+          <Button type="ghost" icon="chevron-left" >
+            返回上级
+          </Button>
         </Col>
         <Col span="2">
           <router-link :to="`/level/edit/${bid}`">

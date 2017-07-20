@@ -11,6 +11,7 @@ import { validator } from '../../utils/common';
 
 async function listLevels({ query, checkQuery }) {
   validator(
+    checkQuery('book').optional(),
     checkQuery('pageNo').ge(1),
     checkQuery('pageSize').ge(1),
   );
