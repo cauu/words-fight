@@ -1,20 +1,23 @@
 import mongoose, { Types } from 'mongoose';
 import thunkify from 'thunkify';
 
+import { getPagination } from '../services/global';
+
 import Question from '../models/question';
 
 /**@arg {number} pageNo 页码数*/
 /**@arg {number} pageSize 页数*/
-function getQuestions({ pageNo, pageSize, sid, title }) {
+function getQuestions({ pageNo, pageSize, ...query }) {
   return Question
-    .find({
-      sid
-    })
-    .skip((pageNo - 1) * pageSize)
-    .limit(pageSize)
+    .find(query)
+    .paginate(pageNo, pageSize)
     .sort({ createdAt: -1 })
     .exec()
   ;
+}
+
+async function getQuestionPagination(query) {
+  return await getPagination(Question, query);
 }
 
 function addQuestion(quest) {
@@ -41,5 +44,6 @@ export {
   getQuestions,
   addQuestion,
   delQuestion,
-  updateQuestion
+  updateQuestion,
+  getQuestionPagination
 };

@@ -46,6 +46,8 @@ const mutations = {
   },
   updateEditQuestion(state, payload) {
     state.editQuestion = {
+      ...state.editQuestion,
+      ...payload
     }
   },
   pushNextRule() {

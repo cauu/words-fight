@@ -66,6 +66,7 @@
             <i-button
               type="primary"
               size="small"
+              @click="toEdit('${row._id}')"
               >
               修改
             </i-button>
@@ -84,6 +85,10 @@
         pageNo: 1,
         pageSize: 10
       })
+    }
+
+    toEdit(qid) {
+      this.$router.push(`/question/edit/${this.sid}/${qid}`)
     }
   }
 </script>

@@ -3,7 +3,8 @@ import {
   getQuestions, 
   addQuestion,
   delQuestion,
-  updateQuestion
+  updateQuestion,
+  getQuestionPagination
 } from '../../services/question';
 import { validator } from '../../utils/common';
 
@@ -14,9 +15,14 @@ async function listQuestions({ query, checkQuery }) {
     checkQuery('sid').optional()
   );
 
-  let questions = await getQuestions(query);
+  let data = await getQuestions(query);
 
-  return successDec(questions);
+  let pagination = await getQuestionPagination(query); 
+
+  return successDec({
+    data,
+    pagination
+  });
 }
 
 async function createQuestion({ request, checkBody }) {

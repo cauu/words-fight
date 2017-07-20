@@ -48,6 +48,18 @@
             </Col>
           </Row>
         </Form-item>
+        <Form-item
+          label="问题类型"
+          >
+          <Row>
+            <Col span="8">
+              <Input
+                v-model="type"
+                placeholder="请输入问题类型"
+                />
+            </Col>
+          </Row>
+        </Form-item>
 
         <content-box title="跳转规则">
           <Form-item
@@ -63,10 +75,23 @@
                 <Input
                   :value="next.code"
                   placeholder="code"
-                  @on-change="(event) => onInputNextRuleCode"
+                  @on-change="(event) => onInputNextRuleCode(event, index)"
                   />
               </Col>
               <Col span="4">
+                <question-selector
+                  :value="next.question"
+                  :sid="sid"
+                  :on-change="(value) => onSelectNextQuestion(value, index)"
+                  />
+              </Col>
+              <Col span="4">
+                <label class="ivu-form-item-label">退出场景:</label>
+                <i-switch
+                  :value="next.shouldLeave"
+                  :on-change="(value) => onShouldNextLeave(value, index)"
+                  >
+                </i-switch>
               </Col>
               <Col v-if="index === nextRule.length - 1" span="2">
                 <Button
@@ -101,12 +126,14 @@
                 <Input
                   :value="answer.text"
                   placeholder="text"
+                  @on-change="(value) => onInputAnswerText(value, index)"
                   />
               </Col>
               <Col span="4">
                 <Input
                   :value="answer.code"
                   placeholder="code"
+                  @on-change="(value) => onInputAnswerCode(value, index)"
                   />
               </Col>
               <Col v-if="index === answers.length - 1" span="2">
@@ -127,10 +154,22 @@
             </Row>
           </Form-item>
         </content-box>
+        <Form-item>
+          <Row>
+            <Button type="primary" @click="onSubmit">提交</Button>
+            <Button type="ghost" @click="onBack" style="margin-left:8px">返回</Button>
+          </Row>
+        </Form-item>
       </Form>
     </section>
   </div>
 </template>
+
+<style scoped>
+  .content-box-wrapper {
+    margin-bottom: 20px;
+  }
+</style>
 
 <script>
   import Vue from 'vue'
@@ -138,6 +177,15 @@
   import { State, Action, Mutation } from 'vuex-class'
 
   import ContentBox from '../../components/content-box'
+  import QuestionSelector from '../../components/question-selector'
+
+  interface IViewMessage {
+    info: Function,
+    success: Function,
+    warning: Function,
+    error: Function,
+    loading: Function
+  }
 
   @Component({
     props: {
@@ -145,12 +193,14 @@
       qid: String
     },
     components: {
-      ContentBox
+      ContentBox,
+      QuestionSelector
     }
   })
   export default class EditQuestion extends Vue {
     sid: string
     qid: string
+    $Message: IViewMessage
 
     get title() {
       return this.editQuestion.title
@@ -169,6 +219,16 @@
     set text(text) {
       this.updateEditQuestion({
         text
+      })
+    }
+
+    get type() {
+      return this.editQuestion.type
+    }
+
+    set type(type) {
+      this.updateEditQuestion({
+        type
       })
     }
 
@@ -206,6 +266,74 @@
       }
     }
 
+    onInputNextRuleCode(e, index) {
+      const next = this.nextRule
+      const code = e.target.value
+
+      next[index] = {
+        ...next[index],
+        code
+      }
+
+      this.updateEditQuestion({
+        next
+      })
+    }
+
+    onSelectNextQuestion(question, index) {
+      const next = this.nextRule
+
+      next[index] = {
+        ...next[index],
+        question
+      }
+
+      this.updateEditQuestion({
+        next
+      })
+    }
+
+    onShouldNextLeave(shouldLeave, index) {
+      const next = this.nextRule
+
+      next[index] = {
+        ...next[index],
+        shouldLeave
+      }
+
+      this.updateEditQuestion({
+        next
+      })
+    }
+
+    onInputAnswerText(e, index) {
+      const answers = this.answers
+      const text = e.target.value
+
+      answers[index] = {
+        ...answers[index],
+        text
+      }
+
+      this.updateEditQuestion({
+        answers
+      })
+    }
+
+    onInputAnswerCode(e, index) {
+      const answers = this.answers
+      const code = e.target.value
+
+      answers[index] = {
+        ...answers[index],
+        code
+      }
+
+      this.updateEditQuestion({
+        answers
+      })
+    }
+
     onAddNextRule() {
       this.pushNextRule()
     }
@@ -215,12 +343,36 @@
     }
 
     onAddAnswer() {
-      console.log('on add answer')
       this.pushAnswer()
     }
 
     onDelAnswer() {
       this.popAnswer()
+    }
+
+    onSubmit() {
+      const editFunc: Function = !!this.qid ? this.updateQuestion : this.createQuestion
+      const question = this.editQuestion
+
+      if(!question.scene) {
+        question.scene = this.sid
+      }
+
+      editFunc(
+        {
+          question,
+          cb: (res) => {
+            let msg= (title) => !!this.qid ? `问题${title}更新成功` : `问题${title}创建成功`
+            const { result } = res
+            this.$Message.success(msg(result.title))
+            this.onBack()
+          }
+        }
+      )
+    }
+
+    onBack() {
+      this.$router.push(`/question/list/${this.sid}`)
     }
   }
 </script>
