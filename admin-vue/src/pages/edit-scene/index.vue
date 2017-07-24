@@ -3,17 +3,16 @@
     <section class="content-head-wrapper">
       <Row>
         <Col span="22">
-          <Breadcrumb>
-            <Breadcrumb-item>
-              书本
-            </Breadcrumb-item>
-            <Breadcrumb-item>
-              关卡
-            </Breadcrumb-item>
-            <Breadcrumb-item>
-              编辑场景
-            </Breadcrumb-item>
-          </Breadcrumb>
+          <crumb-nav
+            v-if="isEdit"
+            currCode="scene"
+            currText="编辑场景"
+            />
+          <crumb-nav
+            v-else
+            currCode="scene"
+            currText="新建场景"
+            />
         </Col>
       </Row>
     </section>
@@ -101,6 +100,7 @@
 
   import ContentBox from 'components/content-box'
   import SceneSelector from 'components/scene-selector'
+  import CrumbNav from '../../components/crumb-nav'
 
   interface IViewMessage {
     info: Function,
@@ -116,14 +116,17 @@
       sid: String,
     },
     components: {
-      'ContentBox': ContentBox,
-      'SceneSelector': SceneSelector
+      ContentBox,
+      SceneSelector,
+      CrumbNav
     }
   })
   export default class EditScene extends Vue {
     lid: string
     sid: string
     $Message: IViewMessage
+
+    isEdit = !!this.sid
 
     get title() {
       return this.editScene.title

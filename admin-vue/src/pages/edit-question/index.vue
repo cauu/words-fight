@@ -3,20 +3,16 @@
     <section class="content-head-wrapper">
       <Row>
         <Col span="22">
-          <Breadcrumb>
-            <Breadcrumb-item>
-              书本
-            </Breadcrumb-item>
-            <Breadcrumb-item>
-              关卡
-            </Breadcrumb-item>
-            <Breadcrumb-item>
-              问题
-            </Breadcrumb-item>
-            <Breadcrumb-item>
-              编辑问题
-            </Breadcrumb-item>
-          </Breadcrumb>
+          <crumb-nav
+            v-if="isEdit"
+            currCode="question"
+            currText="编辑问题"
+            />
+          <crumb-nav
+            v-else
+            currCode="question"
+            currText="新建问题"
+            />
         </Col>
       </Row>
     </section>
@@ -178,6 +174,7 @@
 
   import ContentBox from '../../components/content-box'
   import QuestionSelector from '../../components/question-selector'
+  import CrumbNav from '../../components/crumb-nav'
 
   interface IViewMessage {
     info: Function,
@@ -194,13 +191,16 @@
     },
     components: {
       ContentBox,
-      QuestionSelector
+      QuestionSelector,
+      CrumbNav
     }
   })
   export default class EditQuestion extends Vue {
     sid: string
     qid: string
     $Message: IViewMessage
+
+    isEdit = !!this.qid
 
     get title() {
       return this.editQuestion.title

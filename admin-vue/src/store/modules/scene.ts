@@ -66,6 +66,10 @@ const actions = {
   async listScenes({ commit }, { level, pageSize=10, pageNo=1 }) {
     const res = await getScene({ level, pageSize, pageNo })
 
+    commit('setNavList', {
+      nav: res.result.nav
+    })
+
     commit(
       'setSceneList',
       {

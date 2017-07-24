@@ -2,22 +2,11 @@
   <div>
     <section class="content-head-wrapper">
       <Row>
-        <Col span="2">
-          <Button
-            type="ghost"
-            icon="chevron-left"
-            @click="toSceneList"
-            >
-            返回上级
-          </Button>
-        </Col>
-        <Col span="20">
-          <Breadcrumb>
-            <Breadcrumb-item>书本</Breadcrumb-item>
-            <Breadcrumb-item>关卡</Breadcrumb-item>
-            <Breadcrumb-item>场景</Breadcrumb-item>
-            <Breadcrumb-item>问题</Breadcrumb-item>
-          </Breadcrumb>
+        <Col span="22">
+          <crumb-nav 
+            currCode="question"
+            currText="问题列表"
+            />
         </Col>
         <Col span="2">
           <router-link :to="`/question/edit/${sid}`">
@@ -43,10 +32,15 @@
   import Component from 'vue-class-component'
   import { State, Action, Mutation } from 'vuex-class'
 
+  import CrumbNav from '../../components/crumb-nav'
+
   @Component({
     props: {
       sid: String,
       lid: String
+    },
+    components: {
+      CrumbNav
     }
   })
   export default class QuestionList extends Vue {

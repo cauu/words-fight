@@ -7,6 +7,9 @@ import {
   updateLevel,
   getLevelPagination
 } from '../../services/level';
+import {
+  getBookById
+} from '../../services/book.js';
 import { validator } from '../../utils/common';
 
 async function listLevels({ query, checkQuery }) {
@@ -16,11 +19,14 @@ async function listLevels({ query, checkQuery }) {
     checkQuery('pageSize').ge(1),
   );
 
+  let nav = await getBookById(query.book);
+
   let data = await getLevels(query);
 
   let pagination = await getLevelPagination(query);
 
   return successDec({
+    nav,
     data,
     pagination
   });

@@ -2,21 +2,11 @@
   <div>
     <section class="content-head-wrapper">
       <Row>
-        <Col span="2">
-          <Button
-            type="ghost"
-            icon="chevron-left"
-            @click="toLevelList"
-            >
-            返回上级
-          </Button>
-        </Col>
-        <Col span="20">
-          <Breadcrumb>
-            <Breadcrumb-item>书本</Breadcrumb-item>
-            <Breadcrumb-item>关卡</Breadcrumb-item>
-            <Breadcrumb-item>场景</Breadcrumb-item>
-          </Breadcrumb>
+        <Col span="22">
+          <crumb-nav
+            currCode="scene"
+            currText="场景列表"
+            />
         </Col>
         <Col span="2">
           <router-link :to="`/scene/edit/${lid}`">
@@ -44,9 +34,14 @@
   import Component from 'vue-class-component'
   import { State, Action, Mutation } from 'vuex-class'
 
+  import CrumbNav from '../../components/crumb-nav'
+
   @Component({
     props: {
       lid: String
+    },
+    components: {
+      CrumbNav
     }
   })
   export default class SceneList extends Vue {

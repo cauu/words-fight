@@ -27,7 +27,7 @@ const state = {
 }
 
 const mutations = {
-  setQuestionList(state, { list, pagination }) {
+  setQuestionList(state, { nav, list, pagination }) {
     state.list = list
     state.pagination = pagination
   },
@@ -85,6 +85,10 @@ const actions = {
   },
   async listQuestions({ commit }, { scene, pageSize = 10, pageNo = 1 }) {
     const res = await getQuestions({ scene, pageSize, pageNo })
+
+    commit('setNavList', {
+      nav: res.result.nav
+    })
 
     commit(
       'setQuestionList',

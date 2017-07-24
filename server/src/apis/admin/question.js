@@ -6,20 +6,26 @@ import {
   updateQuestion,
   getQuestionPagination
 } from '../../services/question';
+import {
+  getSceneById
+} from '../../services/scene.js'
 import { validator } from '../../utils/common';
 
 async function listQuestions({ query, checkQuery }) {
   validator(
     checkQuery('pageNo').ge(1),
     checkQuery('pageSize').ge(1),
-    checkQuery('sid').optional()
+    checkQuery('scene').optional()
   );
+
+  let nav = await getSceneById(query.scene).populate('level').deepPopulate('level.book');
 
   let data = await getQuestions(query);
 
   let pagination = await getQuestionPagination(query); 
 
   return successDec({
+    nav,
     data,
     pagination
   });

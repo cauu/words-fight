@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import deepPopulate from 'mongoose-deep-populate';
 
 const Schema = mongoose.Schema;
 
@@ -24,5 +25,7 @@ const QuestionSchema = new Schema({
   createdAt: { type: Number },
   updatedAt: { type: Number }
 });
+
+QuestionSchema.plugin(deepPopulate(mongoose));
 
 module.exports = mongoose.model('Question', QuestionSchema);

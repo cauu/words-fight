@@ -2,6 +2,7 @@ import Koa from 'koa';
 import log4js from 'log4js';
 import mongoose from 'mongoose';
 import Promise from 'bluebird';
+import deepPopulate from 'mongoose-deep-populate';
 
 import routes from './routes';
 import middlewares from './middlewares';
@@ -12,6 +13,7 @@ import './utils/mongoose-pagination';
 const { mongodb } = config;
 mongoose.Promise = Promise;
 mongoose.connect(mongodb.dbUrl, mongodb.dbOpt);
+
 
 const app = new Koa();
 

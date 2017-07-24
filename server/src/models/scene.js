@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import deepPopulate from 'mongoose-deep-populate';
 
 const Schema = mongoose.Schema;
 
@@ -12,5 +13,7 @@ const SceneSchema = new Schema({
     scene: { type: Schema.Types.ObjectId, ref: 'Scene' }
   }]
 });
+
+SceneSchema.plugin(deepPopulate(mongoose));
 
 module.exports = mongoose.model('Scene', SceneSchema);

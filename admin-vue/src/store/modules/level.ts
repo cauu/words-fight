@@ -36,6 +36,13 @@ const actions = {
     const res = await getLevel({ book, pageSize, pageNo })
 
     commit(
+      'setNavList',
+      {
+        nav: res.result.nav
+      }
+    )
+
+    commit(
       'setLevelList',
       {
         list: res.result.data,

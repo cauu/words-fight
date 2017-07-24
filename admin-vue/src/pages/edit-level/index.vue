@@ -3,12 +3,16 @@
     <section class="content-head-wrapper">
       <Row>
         <Col span="22">
-          <Breadcrumb>
-            <Breadcrumb-item>书本</Breadcrumb-item>
-            <Breadcrumb-item>关卡</Breadcrumb-item>
-            <Breadcrumb-item v-if="isEdit">编辑关卡</Breadcrumb-item>
-            <Breadcrumb-item v-else>新建关卡</Breadcrumb-item>
-          </Breadcrumb>
+          <crumb-nav
+            v-if="isEdit"
+            currCode="level"
+            currText="编辑关卡"
+            />
+          <crumb-nav
+            v-else
+            currCode="level"
+            currText="新建关卡"
+            />
         </Col>
       </Row>
     </section>
@@ -47,10 +51,15 @@
     Mutation
   } from 'vuex-class'
 
+  import CrumbNav from '../../components/crumb-nav'
+
   @Component({
     props: {
       lid: String,
       bid: String
+    },
+    components: {
+      CrumbNav
     }
   })
   export default class EditLevel extends Vue {

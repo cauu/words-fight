@@ -6,20 +6,26 @@ import {
   updateScene,
   getScenePagination
 } from '../../services/scene';
+import {
+  getLevelById
+} from '../../services/level';
 import { validator } from '../../utils/common';
 
 async function listScenes({ query, checkQuery }) {
   validator(
     checkQuery('pageNo').ge(1),
     checkQuery('pageSize').ge(1),
-    checkQuery('lid').optional()
+    checkQuery('level').optional()
   );
+
+  let nav = await getLevelById(query.level).populate('book');
 
   let data = await getScenes(query);
 
   let pagination = await getScenePagination(query);
 
   return successDec({
+    nav,
     data,
     pagination
   });
