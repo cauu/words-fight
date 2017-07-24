@@ -2,9 +2,18 @@
   <div>
     <section class="content-head-wrapper">
       <Row>
-        <Col span="22">
+        <Col span="2">
+          <Button
+            type="ghost"
+            icon="chevron-left"
+            @click="toSceneList"
+            >
+            返回上级
+          </Button>
+        </Col>
+        <Col span="20">
           <Breadcrumb>
-            <Breadcrumb-item href="/book/list">书本</Breadcrumb-item>
+            <Breadcrumb-item>书本</Breadcrumb-item>
             <Breadcrumb-item>关卡</Breadcrumb-item>
             <Breadcrumb-item>场景</Breadcrumb-item>
             <Breadcrumb-item>问题</Breadcrumb-item>
@@ -89,6 +98,10 @@
 
     toEdit(qid) {
       this.$router.push(`/question/edit/${this.sid}/${qid}`)
+    }
+
+    toSceneList() {
+      this.$router.back()
     }
   }
 </script>

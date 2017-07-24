@@ -2,10 +2,20 @@
   <div>
     <section class="content-head-wrapper">
       <Row>
-        <Col span="22">
-          <Button type="ghost" icon="chevron-left" >
+        <Col span="2">
+          <Button
+            type="ghost"
+            icon="chevron-left"
+            @click="toBookList"
+            >
             返回上级
           </Button>
+        </Col>
+        <Col span="20">
+          <Breadcrumb>
+            <Breadcrumb-item>书本</Breadcrumb-item>
+            <Breadcrumb-item>关卡</Breadcrumb-item>
+          </Breadcrumb>
         </Col>
         <Col span="2">
           <router-link :to="`/level/edit/${bid}`">
@@ -94,6 +104,10 @@
 
     toSceneList(lid) {
       this.$router.push(`/scene/list/${lid}`)
+    }
+
+    toBookList() {
+      this.$router.back()
     }
   }
 </script>

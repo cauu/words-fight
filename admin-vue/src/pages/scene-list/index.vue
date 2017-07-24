@@ -2,10 +2,19 @@
   <div>
     <section class="content-head-wrapper">
       <Row>
-        <Col span="22">
+        <Col span="2">
+          <Button
+            type="ghost"
+            icon="chevron-left"
+            @click="toLevelList"
+            >
+            返回上级
+          </Button>
+        </Col>
+        <Col span="20">
           <Breadcrumb>
-            <Breadcrumb-item href="/book/list">书本</Breadcrumb-item>
-            <Breadcrumb-item href="/level/list">关卡</Breadcrumb-item>
+            <Breadcrumb-item>书本</Breadcrumb-item>
+            <Breadcrumb-item>关卡</Breadcrumb-item>
             <Breadcrumb-item>场景</Breadcrumb-item>
           </Breadcrumb>
         </Col>
@@ -95,7 +104,11 @@
     }
 
     toQuestionList(sid) {
-      this.$router.push(`/question/list/${sid}`);
+      this.$router.push(`/question/list/${sid}`)
+    }
+
+    toLevelList() {
+      this.$router.back()
     }
   }
 </script>

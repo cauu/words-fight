@@ -2,7 +2,6 @@
   .main-wrapper {
     display: flex;
     width: 92%;
-    background: black;
     margin: 30px auto 20px;
     justify-content: space-between;
     .nav-wrapper {
@@ -27,6 +26,7 @@
 
 <template>
   <div>
+    <particle />
     <header-top></header-top>
     <div class="main-wrapper">
       <div class="nav-wrapper">
@@ -44,11 +44,13 @@
   import Component from 'vue-class-component'
   import headerTop from 'components/Header'
   import sideBar from 'components/SideBar'
+  import particle from 'components/particle'
 
   @Component({
     components: {
       headerTop,
-      sideBar
+      sideBar,
+      particle
     }
   })
   export default class App extends Vue {

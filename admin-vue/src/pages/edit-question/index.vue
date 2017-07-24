@@ -4,10 +4,10 @@
       <Row>
         <Col span="22">
           <Breadcrumb>
-            <Breadcrumb-item href="/book/list">
+            <Breadcrumb-item>
               书本
             </Breadcrumb-item>
-            <Breadcrumb-item href="/level/list">
+            <Breadcrumb-item>
               关卡
             </Breadcrumb-item>
             <Breadcrumb-item>

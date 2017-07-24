@@ -4,8 +4,8 @@
       <Row>
         <Col span="22">
           <Breadcrumb>
-            <Breadcrumb-item href="/book/list">书本</Breadcrumb-item>
-            <Breadcrumb-item :href="`/level/list/${bid}`">关卡</Breadcrumb-item>
+            <Breadcrumb-item>书本</Breadcrumb-item>
+            <Breadcrumb-item>关卡</Breadcrumb-item>
             <Breadcrumb-item v-if="isEdit">编辑关卡</Breadcrumb-item>
             <Breadcrumb-item v-else>新建关卡</Breadcrumb-item>
           </Breadcrumb>

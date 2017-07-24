@@ -4,7 +4,7 @@
       <Row>
         <Col span="22">
           <Breadcrumb>
-            <Breadcrumb-item href="/book/list">书本</Breadcrumb-item>
+            <Breadcrumb-item>书本</Breadcrumb-item>
             <Breadcrumb-item v-if="isEdit">编辑书本</Breadcrumb-item>
             <Breadcrumb-item v-else>新建书本</Breadcrumb-item>
           </Breadcrumb>
