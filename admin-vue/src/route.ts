@@ -20,6 +20,8 @@ const EditScene = require('pages/edit-scene').default
 const QuestionList = require('pages/question-list').default
 const EditQuestion = require('pages/edit-question').default
 
+const Login = require('pages/login').default
+
 Vue.use(Router);
 
 export default new Router({
@@ -70,6 +72,10 @@ export default new Router({
           props: true
         }
       ]
+    },
+    {
+      path: '/login',
+      component: Login
     }
   ]
 });

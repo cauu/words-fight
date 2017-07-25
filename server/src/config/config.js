@@ -3,6 +3,13 @@ const env = process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 let config = {
   app: {
     port: process.env.PORT || 3000
+  },
+
+  jwt: {
+    secret: 'wordsfighting1!@#$',
+    enable: true,
+    cookie: 'Authorization',
+    expiresIn: 60 * 60
   }
 };
 

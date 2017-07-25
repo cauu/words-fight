@@ -14,7 +14,6 @@ const { mongodb } = config;
 mongoose.Promise = Promise;
 mongoose.connect(mongodb.dbUrl, mongodb.dbOpt);
 
-
 const app = new Koa();
 
 base(app);

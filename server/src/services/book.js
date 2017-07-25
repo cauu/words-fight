@@ -1,5 +1,3 @@
-import mongoose, { Types } from 'mongoose';
-
 import { getPagination } from '../services/global';
 
 import Book from '../models/book';

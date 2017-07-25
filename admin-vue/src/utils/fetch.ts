@@ -9,6 +9,9 @@ interface ResponseError extends Error {
 function checkContentStatus(content) {
   if (content.status === 'SUCCESS') {
     return content
+  } else if(content.status === 'LOGIN-ERROR') {
+    window.location.href = '/login'
+    return
   }
 
   let error: ResponseError = <ResponseError>new Error(content.result);
@@ -31,11 +34,14 @@ function parseJSON(response) {
 }
 
 export function put(url, params={}) {
+  const token = localStorage.getItem('token') || ''
+
   const config = {
     method: 'put',
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': token,
     },
     credentials: 'include',
     body: JSON.stringify(params)
@@ -46,12 +52,16 @@ export function put(url, params={}) {
 
 
 export function post(url, params={}) {
+  const token = localStorage.getItem('token') || ''
+
   const config = {
     method: 'post',
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': token
     },
+    Authorization: token,
     credentials: 'include',
     body: JSON.stringify(params)
   };
@@ -60,10 +70,13 @@ export function post(url, params={}) {
 }
 
 export function postForm(url, params) {
+  const token = localStorage.getItem('token') || ''
+
   const config = {
     method: 'post',
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': token
     },
     credentials: 'include',
     body: param(params)
@@ -73,11 +86,14 @@ export function postForm(url, params) {
 }
 
 export function get(url, query = {}) {
+  const token = localStorage.getItem('token') || ''
+
   const config = {
     method: 'get',
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': token
     },
     credentials: 'include'
   };
