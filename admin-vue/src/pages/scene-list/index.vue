@@ -18,10 +18,18 @@
       </Row>
     </section>
     <section class="content-main-wrapper">
-      <Table
-        :columns="columns"
-        :data="scenes"
-        />
+      <div class="paginate-table-wrapper">
+        <Table
+          :columns="columns"
+          :data="scenes"
+          />
+        <Page
+          :current="pagination.pageNo"
+          :page-size="pagination.pageSize"
+          :total="pagination.total"
+          @on-change="onPaginate"
+          />
+      </div>
     </section>
   </div>
 </template>
@@ -84,6 +92,8 @@
 
     @State(state => state.scene.list) scenes
 
+    @State(state => state.scene.pagination) pagination
+
     @Action('listScenes') listScenes
 
     mounted() {
@@ -91,6 +101,14 @@
         level: this.lid,
         pageNo: 1,
         pageSize: 10
+      })
+    }
+
+    onPaginate(pageNo) {
+      this.listScenes({
+        level: this.lid,
+        pageNo,
+        pageSize: this.pagination.pageSize
       })
     }
 

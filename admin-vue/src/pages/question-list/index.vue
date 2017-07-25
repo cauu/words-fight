@@ -18,11 +18,19 @@
       </Row>
     </section>
     <section>
-      <Table
-        :columns="columns"
-        :data="questions"
-        >
-      </Table>
+      <div class="paginate-table-wrapper">
+        <Table
+          :columns="columns"
+          :data="questions"
+          >
+        </Table>
+        <Page
+          :current="pagination.pageNo"
+          :page-size="pagination.pageSize"
+          :total="pagination.total"
+          @on-change="onPaginate"
+          />
+      </div>
     </section>
   </div>
 </template>
@@ -80,6 +88,8 @@
 
     @State(state => state.question.list) questions
 
+    @State(state => state.question.pagination) pagination
+
     @Action('listQuestions') listQuestions
 
     mounted() {
@@ -87,6 +97,14 @@
         scene: this.sid,
         pageNo: 1,
         pageSize: 10
+      })
+    }
+
+    onPaginate(pageNo) {
+      this.listQuestions({
+        scene: this.sid,
+        pageNo,
+        pageSize: this.pagination.pageSize
       })
     }
 

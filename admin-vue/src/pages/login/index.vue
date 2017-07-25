@@ -53,7 +53,7 @@
     background: white;
     margin: 30px auto 20px;
     width: 92%;
-    padding-top: 50px;
+    padding-top: 30px;
     padding-bottom: 50px;
   }
 
@@ -103,6 +103,7 @@
             const { token, username } = result
 
             localStorage.setItem('token', `bearer ${token}`)
+            localStorage.setItem('username', username)
 
             this.$router.push({ path: '/book/list' })
           } catch(e) {

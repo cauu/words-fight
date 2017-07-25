@@ -22,12 +22,25 @@
       padding: 20px 25px;
     }
   }
+
+  .text-header {
+    font-size: 16px;
+    &.highlight {
+      color: #39f;
+    }
+  }
 </style>
 
 <template>
   <div>
     <particle />
-    <header-top></header-top>
+    <header-top>
+      <span class="text-header">你好, </span>
+      <span class="text-header highlight" style="margin-right: 10px">{{ username }}</span>
+      <a @click="logout">
+        <Icon size="18" type="log-out">登出</Icon>
+      </a>
+    </header-top>
     <div class="main-wrapper">
       <div class="nav-wrapper">
         <side-bar></side-bar>
@@ -54,5 +67,13 @@
     }
   })
   export default class App extends Vue {
+    username: string = localStorage.getItem('username')
+
+    logout() {
+      localStorage.removeItem('token')
+      localStorage.removeItem('username')
+
+      window.location.href = '/login'
+    }
   }
 </script>

@@ -18,10 +18,18 @@
       </Row>
     </section>
     <section class="content-main-wrapper">
-      <Table
-        :data="levels"
-        :columns="columns"
-        />
+      <div class="paginate-table-wrapper">
+        <Table
+          :data="levels"
+          :columns="columns"
+          />
+        <Page
+          :current="pagination.pageNo"
+          :page-size="pagination.pageSize"
+          :total="pagination.total"
+          @on-change="onPaginate"
+          />
+        </div>
     </section>
   </div>
 </template>
@@ -84,13 +92,23 @@
 
     @State(state => state.level.list) levels
 
+    @State(state => state.level.pagination) pagination
+
     @Action('listLevels') listLevels
 
-    created() {
+    mounted() {
       this.listLevels({
         book: this.bid,
         pageNo: 1,
         pageSize: 10
+      })
+    }
+
+    onPaginate(pageNo) {
+      this.listLevels({
+        book: this.bid,
+        pageNo,
+        pageSize: this.pagination.pageSize
       })
     }
 

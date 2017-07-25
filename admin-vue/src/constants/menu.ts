@@ -18,19 +18,11 @@ export default [
     ]
   },
   {
-    name: '问题管理',
+    name: '用户管理',
     menus: [
       {
-        name: '模板列表',
-        to: '/quest-tpl/list'
-      },
-      {
-        name: '创建模板',
-        to: '/quest-tpl/edit'
-      },
-      {
-        name: '创建问题',
-        to: '/question/edit'
+        name: '用户列表',
+        to: '/user/list'
       }
     ]
   }

@@ -11,7 +11,6 @@ const router = new Router();
 
 router.get('/check', async (ctx, next) => {
   const adminCheck = checkAuth(true);
-  console.log(adminCheck);
 
   ctx.body = await adminCheck(ctx);
 });
@@ -24,6 +23,11 @@ router.get('/login', async (ctx, next) => {
   const adminLogin = login(true);
 
   ctx.body = await adminLogin(ctx);
+});
+
+router.get('/logout', async (ctx, next) => {
+  /**@desc no need to logout in server-side*/
+  // ctx.body = await logout(ctx);
 });
 
 export default router;
