@@ -28,6 +28,19 @@
             </Col>
           </Row>
         </Form-item>
+        <Form-item
+          label="初始场景"
+          >
+          <Row>
+            <Col span="8">
+              <scene-selector
+                :value="editLevel.rootScene"
+                :on-change="onRootSceneSelect"
+                :lid="lid"
+                />
+            </Col>
+          </Row>
+        </Form-item>
         <Form-item>
           <Row>
             <Button type="primary" @click="onSubmit">提交</Button>
@@ -52,6 +65,7 @@
   } from 'vuex-class'
 
   import CrumbNav from '../../components/crumb-nav'
+  import SceneSelector from '../../components/scene-selector'
 
   @Component({
     props: {
@@ -59,7 +73,8 @@
       bid: String
     },
     components: {
-      CrumbNav
+      CrumbNav,
+      SceneSelector
     }
   })
   export default class EditLevel extends Vue {
@@ -88,7 +103,7 @@
 
     @Mutation('updateEditLevel') updateEditLevel
 
-    created() {
+    mounted() {
       if(!!this.lid) {
         this.getLevelById(this.lid)
       } else {
@@ -96,6 +111,12 @@
           book: this.bid
         })
       }
+    }
+
+    onRootSceneSelect(rootScene) {
+      this.updateEditLevel({
+        rootScene
+      })
     }
 
     onBack() {

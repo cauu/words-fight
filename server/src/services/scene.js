@@ -4,6 +4,13 @@ import { getPagination } from '../services/global';
 
 import Scene from '../models/scene';
 
+function getAllScenes(query) {
+  return Scene
+    .find(query)
+    .exec()
+  ;
+}
+
 function getScenes({ pageNo, pageSize, ...query }) {
   return Scene
     .find(query)
@@ -43,6 +50,7 @@ function updateScene(id, scene) {
 }
 
 export {
+  getAllScenes,
   getScenes,
   getScene,
   getScenePagination,

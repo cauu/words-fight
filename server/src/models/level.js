@@ -6,6 +6,7 @@ const Schema = mongoose.Schema;
 const LevelSchema = new Schema({
   title: { type: String, require: true, unique: true },
   book: { type: Schema.Types.ObjectId, ref: 'Book' },
+  rootScene: { type: Schema.Types.ObjectId, ref: 'Scene' },
   createdAt: { type: Date }
 });
 

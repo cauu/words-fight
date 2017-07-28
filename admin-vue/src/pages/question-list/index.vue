@@ -2,19 +2,18 @@
   <div>
     <section class="content-head-wrapper">
       <Row>
-        <Col span="22">
+        <Col span="10">
           <crumb-nav 
             currCode="question"
             currText="问题列表"
             />
         </Col>
-        <Col span="2">
-          <router-link :to="`/question/edit/${sid}`">
-            <Button type="primary">
-              创建问题
-            </Button>
-          </router-link>
-        </Col>
+        <Button @click="toCreate" style="float:right" type="primary">
+          创建问题
+        </Button>
+        <Button style="float:right; margin-right: 5px" type="ghost">
+          查看问题树
+        </Button>
       </Row>
     </section>
     <section>
@@ -106,6 +105,10 @@
         pageNo,
         pageSize: this.pagination.pageSize
       })
+    }
+
+    toCreate() {
+      this.$router.push(`/question/edit/${this.sid}`)
     }
 
     toEdit(qid) {
