@@ -4,7 +4,8 @@ import {
   addScene,
   delScene,
   updateScene,
-  getScenePagination
+  getScenePagination,
+  getAllScenes
 } from '../../services/scene';
 import {
   getLevelById
@@ -69,6 +70,15 @@ async function modifyScene({ request, query, checkQuery, checkBody }) {
   let result = await updateScene(_id, request.body);
 
   return successDec(result);
+}
+
+async function generateTree({ query, checkQuery }) {
+  validator(
+    checkQuery('level').optional()
+  );
+
+  const scenes = await getAllScenes(query);
+  /**@todo 返回scene tree */
 }
 
 export {

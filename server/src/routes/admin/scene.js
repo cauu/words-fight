@@ -4,7 +4,8 @@ import {
   listScenes,
   createScene,
   removeScene,
-  modifyScene
+  modifyScene,
+  generateTree
 } from '../../apis/admin/scene.js'
 
 const router = new Router();
@@ -23,6 +24,10 @@ router.del('/', async (ctx, next) => {
 
 router.put('/', async (ctx, next) => {
   ctx.body = await modifyScene(ctx);
+});
+
+router.get('/tree', async (ctx, next) => {
+  ctx.body = await generateTree(ctx);
 });
 
 export default router;

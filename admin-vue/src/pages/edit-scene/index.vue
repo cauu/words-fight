@@ -72,6 +72,21 @@
             </Row>
           </Form-item>
         </content-box>
+        <content-box
+          title="初始问题"
+          >
+          <Form-item>
+            <Row>
+              <Col span="4">
+                <question-selector
+                  :value="editScene.rootQuest"
+                  :sid="sid"
+                  :on-change="onRootQuestSelect"
+                  />
+              </Col>
+            </Row>
+          </Form-item>
+        </content-box>
         <Form-item>
           <Row>
             <Button type="primary" @click="onSubmit">提交</Button>
@@ -100,6 +115,7 @@
 
   import ContentBox from 'components/content-box'
   import SceneSelector from 'components/scene-selector'
+  import QuestionSelector from '../../components/question-selector'
   import CrumbNav from '../../components/crumb-nav'
 
   interface IViewMessage {
@@ -118,6 +134,7 @@
     components: {
       ContentBox,
       SceneSelector,
+      QuestionSelector,
       CrumbNav
     }
   })
@@ -192,6 +209,12 @@
 
       this.updateEditScene({
         next
+      })
+    }
+
+    onRootQuestSelect(rootQuest) {
+      this.updateEditScene({
+        rootQuest
       })
     }
 
