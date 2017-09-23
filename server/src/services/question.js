@@ -5,6 +5,13 @@ import { getPagination } from '../services/global';
 
 import Question from '../models/question';
 
+function getAllQuestions(query) {
+  return Question
+    .find(query)
+    .exec()
+  ;
+}
+
 /**@arg {number} pageNo 页码数*/
 /**@arg {number} pageSize 页数*/
 function getQuestions({ pageNo, pageSize, ...query }) {
@@ -41,6 +48,7 @@ function updateQuestion(id, quest) {
 }
 
 export {
+  getAllQuestions,
   getQuestions,
   addQuestion,
   delQuestion,

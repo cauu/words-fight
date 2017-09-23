@@ -1,24 +1,38 @@
-const getPath = cc.url.raw;
 class AudioManager {
   static instance: AudioManager = null;
 
-  static playMusic = (path, loop) => {
-    path = getPath(`resources/${path}`);
+  static getPath(path:string):string {
+    return cc.url.raw(`resources/${path}`);
+  }
+
+  music = null;
+  sound = null;
+
+  constructor() {
+    if(!AudioManager.instance) {
+      AudioManager.instance = new AudioManager();
+    }
+
+    return AudioManager.instance;
+  }
+
+  playMusic = (path:string, loop:boolean) => {
+    return this.music = cc.audioEngine.play(AudioManager.getPath(path), loop, 10);
   };
 
-  static playSound = () => {
-  };
+  playSound = (path:string, loop:boolean) => {
+    return this.sound= cc.audioEngine.play(AudioManager.getPath(path), loop, 10);
+  }
 
-  static playVoice = () => {
-  };
+  stopMusic = () => {
+    cc.audioEngine.stop(this.music);
+    this.music = null;
+  }
 
-  static stopSound = () => {
-  };
-
-  static stopMusic = () => {
-  };
-
-  static stopAllSounds = () => {
-
+  stopSound = () => {
+    cc.audioEngine.stop(this.sound);
+    this.sound = null;
   }
 }
+
+export default AudioManager;

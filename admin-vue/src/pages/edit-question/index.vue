@@ -85,7 +85,7 @@
                 <label class="ivu-form-item-label">退出场景:</label>
                 <i-switch
                   :value="next.shouldLeave"
-                  :on-change="(value) => onShouldNextLeave(value, index)"
+                  @on-change="(value) => onShouldNextLeave(value, index)"
                   >
                 </i-switch>
               </Col>

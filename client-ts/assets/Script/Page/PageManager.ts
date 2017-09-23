@@ -22,10 +22,6 @@ class GPageManager {
     return instance;
   }
 
-  onLoad() {
-    this._prefabManager = new GPrefabManager();
-  }
-
   getPage = (pageName) => {
     console.log(this._prefabManager.getPrefab('Page_Game'));
     return this._prefabManager.getPrefab(pageName);
