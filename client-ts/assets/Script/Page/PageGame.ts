@@ -4,6 +4,5 @@ const {ccclass, property} = cc._decorator;
 export default class PageGame extends cc.Component {
     onLoad() {
         // init logic
-        
     }
 }

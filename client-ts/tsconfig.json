@@ -3,16 +3,9 @@
     "module": "commonjs",
     "lib": [ "dom", "es5", "es2015.promise" ],
     "target": "es5",
-    "allowJs": true,
-    "experimentalDecorators": true,
-    "skipLibCheck": true
+    "experimentalDecorators": true
   },
   "exclude": [
-    "node_modules",
-    "library",
-    "local",
-    "temp",
-    "build",
-    "settings"
+    "node_modules"
   ]
 }
