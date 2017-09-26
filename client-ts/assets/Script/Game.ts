@@ -1,6 +1,8 @@
 import GPrefabManager from './Utils/PrefabManager';
 import GPageManager from './Page/PageManager';
 
+import ModelProxy from './Model/index';
+
 const {ccclass, property} = cc._decorator;
 
 @ccclass

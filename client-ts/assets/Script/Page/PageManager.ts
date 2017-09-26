@@ -23,13 +23,11 @@ class GPageManager {
   }
 
   getPage = (pageName) => {
-    console.log(this._prefabManager.getPrefab('Page_Game'));
     return this._prefabManager.getPrefab(pageName);
   }
 
   openPage = (pageName) => {
     const prefab = this.getPage(pageName);
-    console.log(pageName, prefab);
 
     const page = cc.instantiate(prefab);
     page.parent = this._node;
