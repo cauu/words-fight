@@ -1,11 +1,26 @@
 declare var require: any
 
-import * as Vue from 'vue';
+import Vue from 'vue';
 import Router from 'vue-router'
-// var Router = require('vue-router').default;
-var App = require('./pages/App').default
-var Question = require('./pages/Question').default
-var Book = require('./pages/Book').default
+
+/**
+ * @desc import vue single file component
+ */
+const App = require('pages/app').default
+
+const BookList = require('pages/book-list').default
+const EditBook = require('pages/edit-book').default
+
+const LevelList = require('pages/level-list').default
+const EditLevel = require('pages/edit-level').default
+
+const SceneList = require('pages/scene-list').default
+const EditScene = require('pages/edit-scene').default
+
+const QuestionList = require('pages/question-list').default
+const EditQuestion = require('pages/edit-question').default
+
+const Login = require('pages/login').default
 
 Vue.use(Router);
 
@@ -18,14 +33,49 @@ export default new Router({
       component: App,
       children: [
         {
-          path: 'book',
-          component: Book
+          path: 'book/list',
+          component: BookList
         },
         {
-          path: 'level/:bid',
-          component: Question
+          path: 'book/edit/:bid?',
+          component: EditBook,
+          props: true
+        },
+        {
+          path: 'level/list/:bid',
+          component: LevelList,
+          props: true
+        },
+        {
+          path: 'level/edit/:bid/:lid?',
+          component: EditLevel,
+          props: true
+        },
+        {
+          path: 'scene/list/:lid',
+          component: SceneList,
+          props: true
+        },
+        {
+          path: 'scene/edit/:lid/:sid?',
+          component: EditScene,
+          props: true
+        },
+        {
+          path: 'question/list/:sid',
+          component: QuestionList,
+          props: true
+        },
+        {
+          path: 'question/edit/:sid/:qid?',
+          component: EditQuestion,
+          props: true
         }
       ]
+    },
+    {
+      path: '/login',
+      component: Login
     }
   ]
 });

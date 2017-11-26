@@ -1,16 +1,17 @@
-import { get, post } from '../utils/fetch'
+import { get, post, put } from '../utils/fetch'
 import API from '../constants/api'
 
-export function listQuetions() {
-  return get(API.QUESTIONS)
+export function getQuestions(query) {
+  return get(API.QUESTIONS, query)
 }
 
-export function createQuetion() {
-  return post(API.QUESTIONS)
+export function postQuestion(question) {
+  return post(API.QUESTIONS, question)
 }
 
 export function delQuestion() {
 }
 
-export function updateQuestion() {
+export function putQuestion(question) {
+  return put(API.QUESTIONS, question)
 }

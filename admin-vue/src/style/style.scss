@@ -1,3 +1,22 @@
 @import './vendor/iview';
 
 @import './normalize';
+@import './variable';
+
+.content-head-wrapper {
+  line-height: 50px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.content-main-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 20px;
+}
+
+.paginate-table-wrapper {
+  .ivu-page {
+    float: right;
+    margin-top: 20px;
+  }
+}

@@ -2,14 +2,20 @@
   <div class="header-container">
     <div class="header-wrapper">
       <div class="logo-wrapper"></div>
+      <div class="button-wrapper">
+        <slot />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    created() {
-    },
+  import Vue  from 'vue'
+  import Component from 'vue-class-component'
+  
+  @Component({
+  })
+  export default class Header extends Vue {
     mounted() {
     }
   }
@@ -36,7 +42,10 @@
       margin-top: 15px;
       float: left;
     }
-    .nav-list-wrapper {
+    .button-wrapper {
+      float: right;
+      height: 80px;
+      line-height: 80px;
     }
   }
 </style>

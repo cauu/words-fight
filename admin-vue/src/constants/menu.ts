@@ -4,7 +4,7 @@ export default [
     menus: [
       {
         name: '书本列表',
-        to: '/book'
+        to: '/book/list'
       }
     ]
   },
@@ -14,6 +14,15 @@ export default [
       {
         name: '单词列表',
         to: '/word'
+      }
+    ]
+  },
+  {
+    name: '用户管理',
+    menus: [
+      {
+        name: '用户列表',
+        to: '/user/list'
       }
     ]
   }
