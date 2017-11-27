@@ -1,8 +1,9 @@
 package internal
 
 import (
-	"github.com/name5566/leaf/module"
 	"server/base"
+
+	"github.com/name5566/leaf/module"
 )
 
 var (
@@ -14,10 +15,13 @@ type Module struct {
 	*module.Skeleton
 }
 
+type Battle struct {
+	bid string
+}
+
 func (m *Module) OnInit() {
 	m.Skeleton = skeleton
 }
 
 func (m *Module) OnDestroy() {
-
 }

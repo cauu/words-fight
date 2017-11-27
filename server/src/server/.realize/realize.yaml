@@ -14,6 +14,7 @@ schema:
     build:
       method: go build -o ../../bin/server
       status: true
+    run: true
   watcher:
     paths:
     - /
