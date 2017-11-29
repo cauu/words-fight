@@ -8,10 +8,10 @@ client.onerror = function() {
 
 client.onopen = function() {
     console.log('WebSocket Client Connected');
-
     const msg = JSON.stringify({
         BattleInit: {
-            bid: '123'
+            Id: 123,
+            UserName: "martin43"
         }
     });
 
@@ -23,7 +23,12 @@ client.onclose = function() {
 };
 
 client.onmessage = function(e) {
-    if (typeof e.data === 'string') {
-        console.log("Received: '" + e.data + "'");
+    /**
+     * @desc response here is an array buffer
+     */
+    if(e.data instanceof ArrayBuffer) {
+        console.log("Received: " + String.fromCharCode.apply(null, new Uint8Array(e.data)));
+    } else {
+        console.log("Received: " + e.data);
     }
 };

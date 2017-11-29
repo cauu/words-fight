@@ -15,10 +15,6 @@ type Module struct {
 	*module.Skeleton
 }
 
-type Battle struct {
-	bid string
-}
-
 func (m *Module) OnInit() {
 	m.Skeleton = skeleton
 }
