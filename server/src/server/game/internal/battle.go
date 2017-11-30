@@ -3,6 +3,7 @@ package internal
 import (
 	"fmt"
 	"reflect"
+	"server/model"
 	"server/msg"
 	"sync"
 
@@ -42,6 +43,8 @@ func onBattleInit(args []interface{}) {
 		mut.Unlock()
 
 		fmt.Println("battle created!")
+
+		model.ChanRPC.Go("CreateBattle", "test")
 
 		for key, value := range battles {
 			fmt.Println("Key:", key, "Value:", value)

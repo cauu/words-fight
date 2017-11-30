@@ -1,7 +1,7 @@
-package login
+package model
 
 import (
-	"server/login/internal"
+	"server/model/internal"
 )
 
 var (
