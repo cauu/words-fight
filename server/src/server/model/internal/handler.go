@@ -7,6 +7,7 @@ func registerMsg(m string, h interface{}) {
 func init() {
 	// battle的增删改查
 	registerMsg("CreateBattle", createBattle)
+	registerMsg("GetBattleById", getBattleById)
 
 	// user的增删改查
 	registerMsg("GetUserById", getUserById)

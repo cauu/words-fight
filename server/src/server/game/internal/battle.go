@@ -11,16 +11,16 @@ import (
 )
 
 var mut *sync.Mutex
-var battles map[int]Battle
+var battles map[int]model.Battle
 var increment int
-var playerA User
-var playerB User
+var playerA model.User
+var playerB model.User
 
 func init() {
 	increment = 0
 	mut = new(sync.Mutex)
 
-	battles = make(map[int]Battle)
+	battles = make(map[int]model.Battle)
 
 	registerHandler(&msg.BattleInit{}, onBattleInit)
 	registerHandler(&msg.BattleReady{}, onBattleReady)
@@ -34,24 +34,23 @@ func onBattleInit(args []interface{}) {
 	agent := args[1].(gate.Agent)
 
 	if _, ok := args[0].(*msg.BattleInit); ok {
-		battleCreator := args[0].(*msg.BattleInit)
+		battleInfo := args[0].(*msg.BattleInit)
 
-		mut.Lock()
-		increment++
-		battle := Battle{id: increment, players: [2]User{User{id: battleCreator.Id, name: battleCreator.Username}}}
-		battles[increment] = battle
-		mut.Unlock()
+		skeleton.Go(func() {
+			_, err := model.ChanRPC.Call1("GetBattleById", battleInfo.Bid)
 
-		fmt.Println("battle created!")
+			if err != nil {
+				agent.WriteMsg(&msg.RespError{Status: "failed", Message: "cannot find battle"})
+				return
+			}
 
-		model.ChanRPC.Go("CreateBattle", "test")
+			mut.Lock()
+			// Update battle info in memory
+			fmt.Printf("find battle")
+			mut.Unlock()
 
-		for key, value := range battles {
-			fmt.Println("Key:", key, "Value:", value)
-		}
-
-		// agent.WriteMsg(battle.ToResponse())
-		agent.WriteMsg(&msg.BattleInit{Id: 123})
+		}, func() {
+		})
 	}
 }
 

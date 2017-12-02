@@ -10,8 +10,8 @@ client.onopen = function() {
     console.log('WebSocket Client Connected');
     const msg = JSON.stringify({
         BattleInit: {
-            Id: 123,
-            UserName: "martin43"
+            Bid: "123",
+            Uid: '59aa0f336dc9f502cafb55cc'
         }
     });
 
