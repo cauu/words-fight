@@ -1,25 +1,29 @@
 package internal
 
 import (
-	"fmt"
+	"server/model"
 
 	"gopkg.in/mgo.v2/bson"
 )
 
-type BattleModel struct {
-	Id       bson.ObjectId `bson:"_id,omitempty"`
-	Watchers [3]UserModel
-	Players  [2]UserModel
-	Ip       string
-}
-
 func createBattle(args []interface{}) {
-	fmt.Println("create battle!")
+	var battle model.Battle
+
+	if _, ok := args[0].(model.Battle); ok {
+		battle = args[0].(model.Battle)
+	}
+
+	db := mongoDB.Ref()
+	defer mongoDB.UnRef(db)
+	err := db.DB(DB).C(C_BATTLE).Insert(battle)
+	if err != nil {
+		panic(&err)
+	}
 }
 
 func getBattleById(args []interface{}) interface{} {
 	var id string
-	var result BattleModel
+	var result model.Battle
 
 	if _, ok := args[0].(string); ok {
 		id = args[0].(string)

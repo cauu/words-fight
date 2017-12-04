@@ -2,9 +2,9 @@ package main
 
 import (
 	"server/conf"
+	"server/dao"
 	"server/game"
 	"server/gate"
-	"server/model"
 
 	"github.com/name5566/leaf"
 	lconf "github.com/name5566/leaf/conf"
@@ -20,6 +20,6 @@ func main() {
 	leaf.Run(
 		game.Module,
 		gate.Module,
-		model.Module,
+		dao.Module,
 	)
 }

@@ -1,7 +1,6 @@
 package msg
 
 type BattleInit struct {
-	Bid string
 	Uid string
 }
 
