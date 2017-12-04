@@ -9,18 +9,17 @@ import (
 	"sync"
 
 	"github.com/name5566/leaf/gate"
+	"github.com/name5566/leaf/log"
+	"gopkg.in/mgo.v2/bson"
 )
 
 var mut *sync.Mutex
-var battles map[string]model.Battle
-var increment int
-var playerA model.User
-var playerB model.User
+var battles map[bson.ObjectId]model.Battle
 
 func init() {
 	mut = new(sync.Mutex)
 
-	battles = make(map[string]model.Battle)
+	battles = make(map[bson.ObjectId]model.Battle)
 
 	registerHandler(&msg.BattleInit{}, onBattleInit)
 	registerHandler(&msg.BattleReady{}, onBattleReady)
@@ -33,40 +32,57 @@ func registerHandler(m interface{}, h interface{}) {
 func onBattleInit(args []interface{}) {
 	agent := args[1].(gate.Agent)
 
+	var err error
+
+	defer func() {
+		if err != nil {
+			log.Error(err.Error())
+
+			agent.WriteMsg(&msg.RespError{
+				Status:  "Failed",
+				Message: "Battle init failed",
+				UserMsg: "房间创建失败!",
+			})
+		}
+	}()
+
 	if _, ok := args[0].(*msg.BattleInit); ok {
-		battleInfo := args[0].(*msg.BattleInit)
+		initData := args[0].(*msg.BattleInit)
 
 		skeleton.Go(func() {
-			creator, err := dao.ChanRPC.Call1("GetUserById", battleInfo.Uid)
-
-			fmt.Println("get user by id", creator)
+			var rawUser interface{}
+			var rawBattle interface{}
+			// step1: 查找用户[uid]
+			rawUser, err = dao.ChanRPC.Call1("GetUserById", initData.Uid)
 
 			if err != nil {
 				return
 			}
 
-			if _, ok := creator.(model.User); !ok {
+			if _, ok := rawUser.(model.User); !ok {
 				return
 			}
 
-			user := creator.(model.User)
-			battle := model.Battle{
+			user := rawUser.(model.User)
+
+			// step2: 用户[uid]开始创建房间
+			rawBattle, err = dao.ChanRPC.Call1("CreateBattle", model.Battle{
 				Watchers: [3]model.User{},
 				Players:  [2]model.User{user},
-			}
-
-			fmt.Println("create battle", user.UserName)
-
-			dao.ChanRPC.Call0("CreateBattle", battle)
+			})
 
 			if err != nil {
-				agent.WriteMsg(&msg.RespError{Status: "failed", Message: "cannot find battle"})
 				return
 			}
 
 			mut.Lock()
-			/** 在内存中初始化battle信息，并发送battleinited信息给客户端 */
-			fmt.Printf("find battle")
+			// step3: 在内存中初始化battle信息，并发送battleinited信息给客户端
+			if _, ok := rawBattle.(model.Battle); !ok {
+				return
+			}
+			battle := rawBattle.(model.Battle)
+			battles[battle.Id] = battle
+			fmt.Println("房间创建成功", battles)
 			mut.Unlock()
 		}, func() {
 		})

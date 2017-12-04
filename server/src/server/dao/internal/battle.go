@@ -6,12 +6,14 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-func createBattle(args []interface{}) {
+func createBattle(args []interface{}) interface{} {
 	var battle model.Battle
 
 	if _, ok := args[0].(model.Battle); ok {
 		battle = args[0].(model.Battle)
 	}
+
+	battle.Id = bson.NewObjectId()
 
 	db := mongoDB.Ref()
 	defer mongoDB.UnRef(db)
@@ -19,6 +21,8 @@ func createBattle(args []interface{}) {
 	if err != nil {
 		panic(&err)
 	}
+
+	return battle
 }
 
 func getBattleById(args []interface{}) interface{} {

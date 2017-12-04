@@ -3,6 +3,7 @@ package msg
 type RespError struct {
 	Status  string
 	Message string
+	UserMsg string
 }
 
 type UserInfo struct {
