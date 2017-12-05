@@ -1,5 +1,7 @@
 package msg
 
+import "server/model"
+
 type BattleInit struct {
 	Uid string
 }
@@ -9,6 +11,6 @@ type BattleReady struct {
 }
 
 type JoinBattle struct {
-	Bid string
-	Uid string
+	Bid  string
+	User model.User
 }

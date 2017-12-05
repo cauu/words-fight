@@ -49,6 +49,7 @@ func onBattleInit(args []interface{}) {
 	if _, ok := args[0].(*msg.BattleInit); ok {
 		initData := args[0].(*msg.BattleInit)
 
+		var battle model.Battle
 		skeleton.Go(func() {
 			var rawUser interface{}
 			var rawBattle interface{}
@@ -80,11 +81,12 @@ func onBattleInit(args []interface{}) {
 			if _, ok := rawBattle.(model.Battle); !ok {
 				return
 			}
-			battle := rawBattle.(model.Battle)
+			battle = rawBattle.(model.Battle)
 			battles[battle.Id] = battle
 			fmt.Println("房间创建成功", battles)
 			mut.Unlock()
 		}, func() {
+			agent.WriteMsg(&msg.RespBattleInfo{battle})
 		})
 	}
 }
@@ -95,6 +97,63 @@ func onBattleReady(args []interface{}) {
 	}
 }
 
+// 找个位置坐下
+func appendToWaitList(bid bson.ObjectId, user model.User) {
+	noUser := model.User{}
+	noBattle := model.Battle{}
+
+	battle := battles[bid]
+
+	if battle == noBattle {
+		return
+	}
+
+	for index, value := range battle.Players {
+		if value == noUser {
+			battle.Players[index] = user
+			return
+		}
+	}
+
+	for index, value := range battle.Watchers {
+		if value == noUser {
+			battle.Watchers[index] = user
+			return
+		}
+	}
+
+	return
+}
+
 func onJoinBattle(args []interface{}) {
+	agent := args[1].(gate.Agent)
+
+	var err error
+
+	defer func() {
+		if err != nil {
+			log.Error(err.Error())
+
+			agent.WriteMsg(&msg.RespError{
+				Status:  "Failed",
+				Message: "Join battle failed!",
+				UserMsg: "加入房间失败！",
+			})
+		}
+	}()
 	/** 修改内存中对应的Battle信息 **/
+	if _, ok := args[0].(*msg.JoinBattle); ok {
+		joinData := args[0].(*msg.JoinBattle)
+
+		skeleton.Go(func() {
+			mut.Lock()
+			// 修改内存中的battle对象
+			appendToWaitList(bson.ObjectIdHex(joinData.Bid), joinData.User)
+			mut.Unlock()
+
+		}, func() {
+		})
+
+		fmt.Println("join battle")
+	}
 }

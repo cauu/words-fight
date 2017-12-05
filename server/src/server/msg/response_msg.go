@@ -1,15 +1,13 @@
 package msg
 
+import "server/model"
+
 type RespError struct {
 	Status  string
 	Message string
 	UserMsg string
 }
 
-type UserInfo struct {
-}
-
-type BattleInfo struct {
-	Bid     int
-	Players [2]UserInfo
+type RespBattleInfo struct {
+	model.Battle
 }

@@ -6,15 +6,32 @@ client.onerror = function() {
     console.log('Connection Error');
 };
 
-client.onopen = function() {
-    console.log('WebSocket Client Connected');
-    const msg = JSON.stringify({
+function initBattle() {
+    const initMsg = JSON.stringify({
         BattleInit: {
             Uid: '59aa0f336dc9f502cafb55cc'
         }
     });
+    client.send(initMsg);
+}
 
-    client.send(msg);
+function joinBattle(bid) {
+    const msg = JSON.stringify({
+        JoinBattle: {
+            User: {
+                username: 'yoyo',
+            }
+        }
+    });
+}
+
+function joinBattle() {
+}
+
+client.onopen = function() {
+    console.log('WebSocket Client Connected');
+    /**@desc 初始化房间 */
+    initBattle();
 };
 
 client.onclose = function() {
