@@ -11,3 +11,7 @@ type RespError struct {
 type RespBattleInfo struct {
 	model.Battle
 }
+
+type RespJoinBattle struct {
+	model.Battle
+}

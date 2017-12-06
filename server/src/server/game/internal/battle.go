@@ -23,10 +23,21 @@ func init() {
 
 	registerHandler(&msg.BattleInit{}, onBattleInit)
 	registerHandler(&msg.BattleReady{}, onBattleReady)
+	registerHandler(&msg.JoinBattle{}, onJoinBattle)
 }
+
+/**
+* 调用流程为:
+* 1. 用户A调用initBattle 创建房间,创建房间后，开始监听对战信息
+* 2. 用户B调用joinBattle加入房间,加入房间后，也监听对战信息
+**/
 
 func registerHandler(m interface{}, h interface{}) {
 	skeleton.RegisterChanRPC(reflect.TypeOf(m), h)
+}
+
+func onBattleStart() {
+	// 等待游戏开始
 }
 
 func onBattleInit(args []interface{}) {
@@ -85,8 +96,9 @@ func onBattleInit(args []interface{}) {
 			battles[battle.Id] = battle
 			fmt.Println("房间创建成功", battles)
 			mut.Unlock()
-		}, func() {
 			agent.WriteMsg(&msg.RespBattleInfo{battle})
+		}, func() {
+			// 等待游戏开始
 		})
 	}
 }
@@ -111,6 +123,7 @@ func appendToWaitList(bid bson.ObjectId, user model.User) {
 	for index, value := range battle.Players {
 		if value == noUser {
 			battle.Players[index] = user
+			battles[bid] = battle
 			return
 		}
 	}
@@ -118,6 +131,7 @@ func appendToWaitList(bid bson.ObjectId, user model.User) {
 	for index, value := range battle.Watchers {
 		if value == noUser {
 			battle.Watchers[index] = user
+			battles[bid] = battle
 			return
 		}
 	}
@@ -150,10 +164,9 @@ func onJoinBattle(args []interface{}) {
 			// 修改内存中的battle对象
 			appendToWaitList(bson.ObjectIdHex(joinData.Bid), joinData.User)
 			mut.Unlock()
-
+			agent.WriteMsg(&msg.RespJoinBattle{battles[bson.ObjectIdHex(joinData.Bid)]})
 		}, func() {
+			// 等待游戏开始
 		})
-
-		fmt.Println("join battle")
 	}
 }
