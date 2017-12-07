@@ -9,11 +9,3 @@ type User struct {
 	UserName string
 	NickName string
 }
-
-type Battle struct {
-	Id       bson.ObjectId `bson:"_id,omitempty"`
-	Name     string
-	Watchers [3]User
-	Players  [2]User
-	Ip       string
-}

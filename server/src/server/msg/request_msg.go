@@ -6,8 +6,9 @@ type BattleInit struct {
 	Uid string
 }
 
-type BattleReady struct {
-	Bid int
+type ReadyForBattle struct {
+	Bid string
+	Uid string
 }
 
 type JoinBattle struct {

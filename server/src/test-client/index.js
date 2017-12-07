@@ -25,6 +25,21 @@ const joinBattle = (client) => (bid) => {
         }
     });
 
+    console.log('join battle', bid);
+
+    client.send(msg);
+}
+
+const readyForBattle = (client) => (bid) => (uid) => {
+    const msg = JSON.stringify({
+        ReadyForBattle: {
+            Bid: bid,
+            Uid: uid
+        }
+    });
+
+    console.log(bid, uid);
+
     client.send(msg);
 }
 
@@ -32,6 +47,7 @@ const respHandler = (client) => ({
     RespError: (content) => {
     },
     RespBattleInfo: (content) => {
+        console.log(content);
         bid = content.Id;
     },
     RespJoinBattle: (content) => {
@@ -60,7 +76,7 @@ function start(client) {
             key = Object.keys(resp)[0];
 
             content = resp[key];
-            
+
             console.log('[Receive]', key, content);
             respHandler(client)[key](content);
         }
@@ -68,12 +84,19 @@ function start(client) {
 
     return {
         initBattle: () => initBattle(client),
-        joinBattle: () => joinBattle(client)(bid)
+        joinBattle: () => joinBattle(client)(bid),
+        readyForBattle: (uid) => readyForBattle(client)(bid)(uid)
     };
 }
 
 c1 = start(client1);
 c2 = start(client2);
 
-setTimeout(() => c1.initBattle(), 5000);
-setTimeout(() => c2.joinBattle(), 10000);
+setTimeout(() => c1.initBattle(), 500);
+setTimeout(() => c2.joinBattle(), 3000);
+setTimeout(function() {
+    c1.readyForBattle('59aa0f336dc9f502cafb55cc')
+},  5000);
+setTimeout(function() {
+    c2.readyForBattle('59aa0f336dc9f502cafb55c1')
+}, 6000);

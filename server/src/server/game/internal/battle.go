@@ -14,15 +14,15 @@ import (
 )
 
 var mut *sync.Mutex
-var battles map[bson.ObjectId]model.Battle
+var battles map[bson.ObjectId]*model.Battle
 
 func init() {
 	mut = new(sync.Mutex)
 
-	battles = make(map[bson.ObjectId]model.Battle)
+	battles = make(map[bson.ObjectId]*model.Battle)
 
 	registerHandler(&msg.BattleInit{}, onBattleInit)
-	registerHandler(&msg.BattleReady{}, onBattleReady)
+	registerHandler(&msg.ReadyForBattle{}, onReadyForBattle)
 	registerHandler(&msg.JoinBattle{}, onJoinBattle)
 }
 
@@ -93,8 +93,8 @@ func onBattleInit(args []interface{}) {
 				return
 			}
 			battle = rawBattle.(model.Battle)
-			battles[battle.Id] = battle
-			fmt.Println("房间创建成功", battles)
+			battles[battle.Id] = &battle
+			fmt.Println("房间创建成功", battle)
 			mut.Unlock()
 			agent.WriteMsg(&msg.RespBattleInfo{battle})
 		}, func() {
@@ -103,40 +103,25 @@ func onBattleInit(args []interface{}) {
 	}
 }
 
-func onBattleReady(args []interface{}) {
-	if _, ok := args[0].(*msg.BattleReady); ok {
-		fmt.Println("receive battle ready!")
+func onReadyForBattle(args []interface{}) {
+	agent := args[1].(gate.Agent)
+
+	if _, ok := args[0].(*msg.ReadyForBattle); ok {
+		data := args[0].(*msg.ReadyForBattle)
+
+		fmt.Println("receive battle ready!", data)
+
+		skeleton.Go(func() {
+			mut.Lock()
+			battle := battles[bson.ObjectIdHex(data.Bid)]
+			battle.ReadyForBattle(bson.ObjectIdHex(data.Uid))
+			fmt.Println(battle)
+			mut.Unlock()
+			agent.WriteMsg(&msg.RespJoinBattle{*battles[bson.ObjectIdHex(data.Bid)]})
+		}, func() {
+
+		})
 	}
-}
-
-// 找个位置坐下
-func appendToWaitList(bid bson.ObjectId, user model.User) {
-	noUser := model.User{}
-	noBattle := model.Battle{}
-
-	battle := battles[bid]
-
-	if battle == noBattle {
-		return
-	}
-
-	for index, value := range battle.Players {
-		if value == noUser {
-			battle.Players[index] = user
-			battles[bid] = battle
-			return
-		}
-	}
-
-	for index, value := range battle.Watchers {
-		if value == noUser {
-			battle.Watchers[index] = user
-			battles[bid] = battle
-			return
-		}
-	}
-
-	return
 }
 
 func onJoinBattle(args []interface{}) {
@@ -162,9 +147,10 @@ func onJoinBattle(args []interface{}) {
 		skeleton.Go(func() {
 			mut.Lock()
 			// 修改内存中的battle对象
-			appendToWaitList(bson.ObjectIdHex(joinData.Bid), joinData.User)
+			battle := battles[bson.ObjectIdHex(joinData.Bid)]
+			battle.JoinBattle(joinData.User)
 			mut.Unlock()
-			agent.WriteMsg(&msg.RespJoinBattle{battles[bson.ObjectIdHex(joinData.Bid)]})
+			agent.WriteMsg(&msg.RespJoinBattle{*battles[bson.ObjectIdHex(joinData.Bid)]})
 		}, func() {
 			// 等待游戏开始
 		})
