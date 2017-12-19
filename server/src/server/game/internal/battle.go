@@ -40,6 +40,7 @@ func onBattleStart() {
 	// 等待游戏开始
 }
 
+// 增加一个timer，定时检查游戏是否开始，如果已经开始，定时向所有房间中的用户发送游戏双方的操作
 func onBattleInit(args []interface{}) {
 	agent := args[1].(gate.Agent)
 

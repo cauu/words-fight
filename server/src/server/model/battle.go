@@ -60,5 +60,10 @@ func (battle *Battle) ReadyForBattle(uid bson.ObjectId) error {
 	return errors.New("用户不在房间中")
 }
 
-func (battle *Battle) Run() {
+func (battle *Battle) Start() {
+	if len(battle.ReadyPlayers) == 2 {
+		// 如果battle.isStart，那么就向对战双方发送各自的操作
+		// 如果battle还没有Start，发送countdown，等待3秒后，isStart设为true
+		// 并开始向双方发送对战信息
+	}
 }
