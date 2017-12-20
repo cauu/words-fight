@@ -53,6 +53,9 @@ const respHandler = (client) => ({
     RespJoinBattle: (content) => {
     },
     RespBattleStart: (content) => {
+    },
+    RespBattleFrame: (content) => {
+        console.log(content);
     }
 });
 

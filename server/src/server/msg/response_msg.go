@@ -15,3 +15,7 @@ type RespBattleInfo struct {
 type RespJoinBattle struct {
 	model.Battle
 }
+
+type RespBattleFrame struct {
+	model.Frame
+}

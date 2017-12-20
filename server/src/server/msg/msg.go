@@ -17,4 +17,5 @@ func init() {
 	Processor.Register(&RespError{})
 	Processor.Register(&RespBattleInfo{})
 	Processor.Register(&RespJoinBattle{})
+	Processor.Register(&RespBattleFrame{})
 }

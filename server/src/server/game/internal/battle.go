@@ -7,6 +7,7 @@ import (
 	"server/model"
 	"server/msg"
 	"sync"
+	"time"
 
 	"github.com/name5566/leaf/gate"
 	"github.com/name5566/leaf/log"
@@ -36,8 +37,14 @@ func registerHandler(m interface{}, h interface{}) {
 	skeleton.RegisterChanRPC(reflect.TypeOf(m), h)
 }
 
-func onBattleStart() {
+func battleStart(battle *model.Battle, agent gate.Agent) {
 	// 等待游戏开始
+	ticker := time.NewTicker(time.Millisecond * 20)
+
+	for t := range ticker.C {
+		fmt.Println(t)
+		agent.WriteMsg(&msg.RespBattleFrame{battle.Start()})
+	}
 }
 
 // 增加一个timer，定时检查游戏是否开始，如果已经开始，定时向所有房间中的用户发送游戏双方的操作
@@ -100,11 +107,13 @@ func onBattleInit(args []interface{}) {
 			agent.WriteMsg(&msg.RespBattleInfo{battle})
 		}, func() {
 			// 等待游戏开始
+			battleStart(&battle, agent)
 		})
 	}
 }
 
 func onReadyForBattle(args []interface{}) {
+	var battle *model.Battle
 	agent := args[1].(gate.Agent)
 
 	if _, ok := args[0].(*msg.ReadyForBattle); ok {
@@ -114,13 +123,13 @@ func onReadyForBattle(args []interface{}) {
 
 		skeleton.Go(func() {
 			mut.Lock()
-			battle := battles[bson.ObjectIdHex(data.Bid)]
+			battle = battles[bson.ObjectIdHex(data.Bid)]
 			battle.ReadyForBattle(bson.ObjectIdHex(data.Uid))
 			fmt.Println(battle)
 			mut.Unlock()
 			agent.WriteMsg(&msg.RespJoinBattle{*battles[bson.ObjectIdHex(data.Bid)]})
 		}, func() {
-
+			battleStart(battle, agent)
 		})
 	}
 }
