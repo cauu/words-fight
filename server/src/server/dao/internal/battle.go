@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"fmt"
 	"server/model"
 
 	"gopkg.in/mgo.v2/bson"
@@ -19,6 +20,7 @@ func createBattle(args []interface{}) interface{} {
 	defer mongoDB.UnRef(db)
 	err := db.DB(DB).C(C_BATTLE).Insert(battle)
 	if err != nil {
+		fmt.Println("创建battle失败", err)
 		panic(&err)
 	}
 

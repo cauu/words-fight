@@ -6,24 +6,37 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
+type BattleListener func(frame Frame)
+
+//
 type Frame struct {
 	Id         int
 	Selections [2]int
 }
 
 type Battle struct {
-	Id           bson.ObjectId `bson:"_id,omitempty"`
-	Name         string
-	Watchers     [3]User
-	Players      [2]User
-	Ip           string
-	ReadyPlayers [2]User `bson:"-"`
-	Status       int     `bson:"-"` // 0--Wait 1--Ready 2--Play 3--End 4--Stop
-	Frames       []Frame `bson:"_"`
+	Id                bson.ObjectId `bson:"_id,omitempty"`
+	Name              string
+	Watchers          [3]User
+	Players           [2]User
+	Ip                string
+	ReadyPlayers      [2]User          `bson:"-"`
+	Status            int              `bson:"-"` // 0--Wait 1--Ready 2--Play 3--End 4--Stop
+	CurrentFrameIndex int              `bson:"-"`
+	Frames            []Frame          `bson:"-"`
+	Listeners         []BattleListener `bson:"-"`
 }
 
 func (battle *Battle) Save() error {
 	return nil
+}
+
+func (battle *Battle) Subscribe(listener BattleListener) {
+	if battle.Listeners == nil {
+		battle.Listeners = make([]BattleListener, 0, 5)
+	}
+
+	battle.Listeners = append(battle.Listeners, listener)
 }
 
 func (battle *Battle) JoinBattle(user User) error {

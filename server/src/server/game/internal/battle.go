@@ -47,6 +47,12 @@ func battleStart(battle *model.Battle, agent gate.Agent) {
 	}
 }
 
+func onBattleStart(agent gate.Agent, battle *model.Battle) {
+	battle.Subscribe(func(frame model.Frame) {
+		fmt.Println("game start")
+	})
+}
+
 // 增加一个timer，定时检查游戏是否开始，如果已经开始，定时向所有房间中的用户发送游戏双方的操作
 func onBattleInit(args []interface{}) {
 	agent := args[1].(gate.Agent)
@@ -67,6 +73,7 @@ func onBattleInit(args []interface{}) {
 
 	if _, ok := args[0].(*msg.BattleInit); ok {
 		initData := args[0].(*msg.BattleInit)
+		fmt.Println("创建房间", initData)
 
 		var battle model.Battle
 		skeleton.Go(func() {
@@ -74,6 +81,7 @@ func onBattleInit(args []interface{}) {
 			var rawBattle interface{}
 			// step1: 查找用户[uid]
 			rawUser, err = dao.ChanRPC.Call1("GetUserById", initData.Uid)
+			fmt.Println("寻找用户", rawUser)
 
 			if err != nil {
 				return
@@ -86,6 +94,7 @@ func onBattleInit(args []interface{}) {
 			user := rawUser.(model.User)
 
 			// step2: 用户[uid]开始创建房间
+			fmt.Println("创建battle", user)
 			rawBattle, err = dao.ChanRPC.Call1("CreateBattle", model.Battle{
 				Watchers: [3]model.User{},
 				Players:  [2]model.User{user},
@@ -107,7 +116,8 @@ func onBattleInit(args []interface{}) {
 			agent.WriteMsg(&msg.RespBattleInfo{battle})
 		}, func() {
 			// 等待游戏开始
-			battleStart(&battle, agent)
+			// 注册battle开始的回调函数
+			onBattleStart(agent, &battle)
 		})
 	}
 }
@@ -129,7 +139,7 @@ func onReadyForBattle(args []interface{}) {
 			mut.Unlock()
 			agent.WriteMsg(&msg.RespJoinBattle{*battles[bson.ObjectIdHex(data.Bid)]})
 		}, func() {
-			battleStart(battle, agent)
+			battle.Start()
 		})
 	}
 }
@@ -150,6 +160,8 @@ func onJoinBattle(args []interface{}) {
 			})
 		}
 	}()
+
+	var battle *model.Battle
 	/** 修改内存中对应的Battle信息 **/
 	if _, ok := args[0].(*msg.JoinBattle); ok {
 		joinData := args[0].(*msg.JoinBattle)
@@ -157,12 +169,19 @@ func onJoinBattle(args []interface{}) {
 		skeleton.Go(func() {
 			mut.Lock()
 			// 修改内存中的battle对象
-			battle := battles[bson.ObjectIdHex(joinData.Bid)]
+			battle = battles[bson.ObjectIdHex(joinData.Bid)]
 			battle.JoinBattle(joinData.User)
 			mut.Unlock()
 			agent.WriteMsg(&msg.RespJoinBattle{*battles[bson.ObjectIdHex(joinData.Bid)]})
 		}, func() {
 			// 等待游戏开始
+			// 注册等待游戏开始的回调函数
+			onBattleStart(agent, battle)
 		})
 	}
+}
+
+func onBattleEnd(args []interface{}) {
+	// 战斗结束时的回调；
+	// 双发会发送各自的游戏结果
 }
