@@ -7,7 +7,6 @@ import (
 	"server/model"
 	"server/msg"
 	"sync"
-	"time"
 
 	"github.com/name5566/leaf/gate"
 	"github.com/name5566/leaf/log"
@@ -37,15 +36,15 @@ func registerHandler(m interface{}, h interface{}) {
 	skeleton.RegisterChanRPC(reflect.TypeOf(m), h)
 }
 
-func battleStart(battle *model.Battle, agent gate.Agent) {
-	// 等待游戏开始
-	ticker := time.NewTicker(time.Millisecond * 20)
+// func battleStart(battle *model.Battle, agent gate.Agent) {
+// 	// 等待游戏开始
+// 	ticker := time.NewTicker(time.Millisecond * 20)
 
-	for t := range ticker.C {
-		fmt.Println(t)
-		agent.WriteMsg(&msg.RespBattleFrame{battle.Start()})
-	}
-}
+// 	for t := range ticker.C {
+// 		fmt.Println(t)
+// 		agent.WriteMsg(&msg.RespBattleFrame{battle.Start()})
+// 	}
+// }
 
 func onBattleStart(agent gate.Agent, battle *model.Battle) {
 	battle.Subscribe(func(frame model.Frame) {
@@ -179,6 +178,10 @@ func onJoinBattle(args []interface{}) {
 			onBattleStart(agent, battle)
 		})
 	}
+}
+
+func onOperate(args []interface{}) {
+	// agent := args[1].(gate.Agent)
 }
 
 func onBattleEnd(args []interface{}) {

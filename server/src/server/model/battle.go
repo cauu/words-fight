@@ -2,9 +2,14 @@ package model
 
 import (
 	"errors"
+	"fmt"
+	"sync"
+	"time"
 
 	"gopkg.in/mgo.v2/bson"
 )
+
+var mut *sync.Mutex
 
 type BattleListener func(frame Frame)
 
@@ -15,16 +20,17 @@ type Frame struct {
 }
 
 type Battle struct {
-	Id                bson.ObjectId `bson:"_id,omitempty"`
-	Name              string
-	Watchers          [3]User
-	Players           [2]User
-	Ip                string
-	ReadyPlayers      [2]User          `bson:"-"`
-	Status            int              `bson:"-"` // 0--Wait 1--Ready 2--Play 3--End 4--Stop
-	CurrentFrameIndex int              `bson:"-"`
-	Frames            []Frame          `bson:"-"`
-	Listeners         []BattleListener `bson:"-"`
+	Id             bson.ObjectId `bson:"_id,omitempty"`
+	Name           string
+	Watchers       [3]User
+	Players        [2]User
+	Ip             string
+	ReadyPlayers   [2]User          `bson:"-"`
+	Status         int              `bson:"-"` // 0--Wait 1--Ready 2--Play 3--End 4--Stop
+	CurrentFrameId int              `bson:"-"`
+	NextFrame      Frame            `bson:"-"`
+	Frames         []Frame          `bson:"-"`
+	Listeners      []BattleListener `bson:"-"`
 }
 
 func (battle *Battle) Save() error {
@@ -80,20 +86,36 @@ func (battle *Battle) ReadyForBattle(uid bson.ObjectId) error {
 	return errors.New("用户不在房间中")
 }
 
-func (battle *Battle) Start() Frame {
-	emptyFrame := Frame{}
+// 将operation保存到下一个frame中
+func (battle *Battle) OpToNextFrame(idx int, selection int) {
+	mut.Lock()
 
+	battle.NextFrame.Selections[idx] = selection
+
+	mut.Unlock()
+}
+
+func (battle *Battle) NotifyAll() {
+	// listeners := battle.Listeners
+	fmt.Printf("发送notify: %d ", battle.NextFrame.Id)
+}
+
+// 向所有的listener发送游戏帧
+func (battle *Battle) Start() {
+	fmt.Println("游戏开始!")
 	if battle.Frames == nil {
-		battle.Frames = make([]Frame, 0, 100)
+		battle.Frames = make([]Frame, 0, 30000)
 	}
 
-	if len(battle.Frames) == 0 {
-		return emptyFrame
+	battle.NextFrame = Frame{Id: battle.CurrentFrameId, Selections: [2]int{}}
+
+	ticker := time.NewTicker(time.Microsecond * 20)
+
+	for t := range ticker.C {
+		fmt.Println(t)
+		battle.NotifyAll()
+		battle.CurrentFrameId++
+		battle.NextFrame = Frame{Id: battle.CurrentFrameId, Selections: [2]int{}}
+		battle.Frames = append(battle.Frames, battle.NextFrame)
 	}
-
-	currFrame := battle.Frames[len(battle.Frames)-1]
-
-	battle.Frames = battle.Frames[:len(battle.Frames)-1]
-
-	return currFrame
 }
