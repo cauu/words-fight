@@ -24,6 +24,7 @@ func init() {
 	registerHandler(&msg.BattleInit{}, onBattleInit)
 	registerHandler(&msg.ReadyForBattle{}, onReadyForBattle)
 	registerHandler(&msg.JoinBattle{}, onJoinBattle)
+	registerHandler(&msg.UserOperate{}, onOperate)
 }
 
 /**
@@ -31,24 +32,16 @@ func init() {
 * 1. 用户A调用initBattle 创建房间,创建房间后，开始监听对战信息
 * 2. 用户B调用joinBattle加入房间,加入房间后，也监听对战信息
 **/
-
 func registerHandler(m interface{}, h interface{}) {
 	skeleton.RegisterChanRPC(reflect.TypeOf(m), h)
 }
 
-// func battleStart(battle *model.Battle, agent gate.Agent) {
-// 	// 等待游戏开始
-// 	ticker := time.NewTicker(time.Millisecond * 20)
-
-// 	for t := range ticker.C {
-// 		fmt.Println(t)
-// 		agent.WriteMsg(&msg.RespBattleFrame{battle.Start()})
-// 	}
-// }
-
 func onBattleStart(agent gate.Agent, battle *model.Battle) {
 	battle.Subscribe(func(frame model.Frame) {
-		fmt.Println("game start")
+		skeleton.Go(func() {
+			fmt.Printf("发送notify: %d %d %d \n", frame.Id, frame.Selections[0], frame.Selections[1])
+		}, func() {
+		})
 	})
 }
 
@@ -137,8 +130,9 @@ func onReadyForBattle(args []interface{}) {
 			fmt.Println(battle)
 			mut.Unlock()
 			agent.WriteMsg(&msg.RespJoinBattle{*battles[bson.ObjectIdHex(data.Bid)]})
-		}, func() {
+
 			battle.Start()
+		}, func() {
 		})
 	}
 }
@@ -181,7 +175,14 @@ func onJoinBattle(args []interface{}) {
 }
 
 func onOperate(args []interface{}) {
-	// agent := args[1].(gate.Agent)
+	fmt.Println("接受到用户的消息")
+	var battle *model.Battle
+	if _, ok := args[0].(*msg.UserOperate); ok {
+		operation := args[0].(*msg.UserOperate)
+		fmt.Println("operation", operation.Selection)
+		battle = battles[bson.ObjectIdHex(operation.Bid)]
+		battle.OpToNextFrame(bson.ObjectIdHex(operation.Uid), operation.Selection)
+	}
 }
 
 func onBattleEnd(args []interface{}) {

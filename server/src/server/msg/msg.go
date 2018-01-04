@@ -12,6 +12,7 @@ func init() {
 	Processor.Register(&BattleInit{})
 	Processor.Register(&JoinBattle{})
 	Processor.Register(&ReadyForBattle{})
+	Processor.Register(&UserOperate{})
 
 	// Response msg
 	Processor.Register(&RespError{})

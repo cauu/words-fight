@@ -15,3 +15,9 @@ type JoinBattle struct {
 	Bid  string
 	User model.User
 }
+
+type UserOperate struct {
+	Bid       string
+	Uid       string
+	Selection int
+}

@@ -9,4 +9,5 @@ func init() {
 	msg.Processor.SetRouter(&msg.BattleInit{}, game.ChanRPC)
 	msg.Processor.SetRouter(&msg.JoinBattle{}, game.ChanRPC)
 	msg.Processor.SetRouter(&msg.ReadyForBattle{}, game.ChanRPC)
+	msg.Processor.SetRouter(&msg.UserOperate{}, game.ChanRPC)
 }

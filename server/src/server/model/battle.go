@@ -13,6 +13,10 @@ var mut *sync.Mutex
 
 type BattleListener func(frame Frame)
 
+func init() {
+	mut = new(sync.Mutex)
+}
+
 //
 type Frame struct {
 	Id         int
@@ -87,20 +91,30 @@ func (battle *Battle) ReadyForBattle(uid bson.ObjectId) error {
 }
 
 // 将operation保存到下一个frame中
-func (battle *Battle) OpToNextFrame(idx int, selection int) {
+func (battle *Battle) OpToNextFrame(uid bson.ObjectId, selection int) {
+	var userIdx int
+	for i, p := range battle.Players {
+		if p.Id == uid {
+			userIdx = i
+		}
+	}
+
 	mut.Lock()
 
-	battle.NextFrame.Selections[idx] = selection
+	battle.NextFrame.Selections[userIdx] = selection
 
 	mut.Unlock()
 }
 
 func (battle *Battle) NotifyAll() {
 	// listeners := battle.Listeners
-	fmt.Printf("发送notify: %d ", battle.NextFrame.Id)
+	for _, listener := range battle.Listeners {
+		listener(battle.NextFrame)
+	}
 }
 
 // 向所有的listener发送游戏帧
+// 如果还有用户没准备完毕，则返回，否则游戏开始
 func (battle *Battle) Start() {
 	fmt.Println("游戏开始!")
 	if battle.Frames == nil {
@@ -109,10 +123,9 @@ func (battle *Battle) Start() {
 
 	battle.NextFrame = Frame{Id: battle.CurrentFrameId, Selections: [2]int{}}
 
-	ticker := time.NewTicker(time.Microsecond * 20)
+	ticker := time.NewTicker(time.Millisecond * 50)
 
-	for t := range ticker.C {
-		fmt.Println(t)
+	for range ticker.C {
 		battle.NotifyAll()
 		battle.CurrentFrameId++
 		battle.NextFrame = Frame{Id: battle.CurrentFrameId, Selections: [2]int{}}
