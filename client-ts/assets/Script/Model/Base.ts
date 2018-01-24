@@ -1,4 +1,6 @@
 class BaseModel {
+  namespace = '';
+
   state = {};
 
   effects = {};
@@ -15,12 +17,14 @@ class BaseModel {
     };
   }
 
-  onEffect = async (effectName) => {
-    this.effects[effectName] && this.effects[effectName]();
+  onEffect = async (effectName, ...params) => {
+    if(this.effects[effectName]) {
+      return await this.effects[effectName](...params);
+    }
   }
 
-  onAction = (actionName) => {
-    this.actions[actionName] && this.actions[actionName]();
+  onAction = (actionName, ...params) => {
+    return this.actions[actionName] && this.actions[actionName](...params);
   }
 }
 

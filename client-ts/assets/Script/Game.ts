@@ -19,7 +19,7 @@ export default class Game extends cc.Component {
         this.prefabManager = new GPrefabManager(() => {
             this.pageManager = new GPageManager(this.prefabManager, this.node);
 
-            this.pageManager.openPage('Page_Game');
+            this.pageManager.openPage('Page_Main');
         });
     }
 }

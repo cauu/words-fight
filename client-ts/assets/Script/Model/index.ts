@@ -1,6 +1,7 @@
 import Base from './Base';
 import User from './User';
 import Level from './Level';
+import Battle from './Battle';
 
 class ModelProxy {
   static instance: ModelProxy = null;
@@ -21,24 +22,39 @@ class ModelProxy {
     return this;
   }
 
-  onEffect = (effectName) => {
-    this.models.forEach((model) => {
-      model.onEffect(effectName);
-    });
+  onEffect = async (effectName, ...params) => {
+    const [namespace, fName] = effectName.split('/');
 
-    return this;
+    let result;
+
+    for(let i = 0; i < this.models.length; i++) {
+      const model = this.models[i];
+
+      if(model.namespace === namespace) {
+        result = await model.onEffect(fName, ...params);
+      }
+    };
+
+    return result;
   }
 
-  onAction = (actionName) => {
-    this.models.forEach((model) => {
-      model.onAction(actionName);
+  onAction = async (actionName, ...params) => {
+    const [namespace, fName] = actionName.split('/');
+
+    let result;
+
+    this.models.forEach(async (model) => {
+      if(model.namespace === namespace) {
+        result = await model.onAction(fName, ...params);
+      }
     });
 
-    return this;
+    return result;
   }
 }
 
 export default new ModelProxy()
   .registerModel(new User())
   .registerModel(new Level())
+  .registerModel(new Battle())
 ;
