@@ -19,12 +19,12 @@ class BaseModel {
 
   onEffect = async (effectName, ...params) => {
     if(this.effects[effectName]) {
-      return await this.effects[effectName](...params);
+      return await this.effects[effectName].call(this, ...params);
     }
   }
 
   onAction = (actionName, ...params) => {
-    return this.actions[actionName] && this.actions[actionName](...params);
+    return this.actions[actionName] && this.actions[actionName].call(this, ...params);
   }
 }
 
