@@ -9,10 +9,15 @@ export default class PageMain extends cc.Component {
 
   async onStartClick(event, customEventData) {
     let result = await proxy.onEffect('battle/createConnection');
-    console.log('result', result);
+
+    proxy.onEffect('battle/initBattle', '59aa0f336dc9f502cafb55cc');
   }
 
   onJoinClick(event, customEventData) {
-      console.log('hehe');
+      proxy.onEffect('battle/joinBattle', {
+        id: '59aa0f336dc9f502cafb55c1',
+        username: 'yoyo',
+        nickname: 'haha'
+      }, '123');
   }
 }
