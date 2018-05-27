@@ -18,11 +18,11 @@ function getWords(query) {
 }
 
 async function addWord(word) {
-  const nextSeq = await getNextSeqOf('word');
+  const { seq } = await getNextSeqOf('word');
 
   return Word.create({
     ...word,
-    key: nextSeq
+    key: seq
   });
 }
 

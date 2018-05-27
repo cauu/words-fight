@@ -1,11 +1,11 @@
 import Counter from '../models/counter';
 
 function getNextSeqOf(name) {
-  return Counter.findAndUpdate({
-    query: { name },
-    update: { $inc: { seq: 1}},
-    new: true
-  });
+  return Counter.findOneAndUpdate(
+    { name },
+    { $inc: { seq: 1}},
+    { new: true, upsert: true }
+  );
 }
 
 export {

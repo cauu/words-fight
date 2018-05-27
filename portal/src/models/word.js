@@ -7,9 +7,7 @@ const WordSchema = new Schema({
   text: { type: String, require: true, unique: true },
   phonetic: { type: String },
   translation: { type: String },
-  tags: [{
-    name: { type: String }
-  }]
+  tags: [{ type: String }]
 });
 
 module.exports = mongoose.model('Word', WordSchema);
