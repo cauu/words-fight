@@ -23,11 +23,19 @@ export class Main extends cc.Component {
   btnToPackage: cc.Node = null;
 
   onLoad = () => {
-    this._initBtns();
+    // this._initBtns();
+    console.log(this.btnFriendsBattle);
+    this.btnFriendsBattle.on(cc.Node.EventType.MOUSE_DOWN, (event) => {
+      console.log('cool');
+    });
+
+    console.log(cc.Node.EventType.MOUSE_DOWN)
   }
 
   _initBtns = () => {
+    console.log('iunit')
     this.btnRankBattle.on('mousedown', () => {
+      console.log('cool');
       cc.director.loadScene('Page_rankGame');
     });
 
