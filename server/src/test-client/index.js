@@ -25,8 +25,6 @@ const joinBattle = (client) => (bid) => {
         }
     });
 
-    console.log('join battle', bid);
-
     client.send(msg);
 }
 
@@ -41,6 +39,19 @@ const readyForBattle = (client) => (bid) => (uid) => {
     console.log(bid, uid);
 
     client.send(msg);
+}
+
+const userOperate = (client) => (bid) => (uid) => {
+    const msg = JSON.stringify({
+        UserOperate: {
+            Bid: bid,
+            Uid: uid,
+            Selection: 1
+        }
+    });
+
+    client.send(msg);
+    console.log('user发送操作:', msg);
 }
 
 const respHandler = (client) => ({
@@ -88,7 +99,8 @@ function start(client) {
     return {
         initBattle: () => initBattle(client),
         joinBattle: () => joinBattle(client)(bid),
-        readyForBattle: (uid) => readyForBattle(client)(bid)(uid)
+        readyForBattle: (uid) => readyForBattle(client)(bid)(uid),
+        userOperate: (uid) => userOperate(client)(bid)(uid)
     };
 }
 
@@ -102,4 +114,7 @@ setTimeout(function() {
 },  5000);
 setTimeout(function() {
     c2.readyForBattle('59aa0f336dc9f502cafb55c1')
+    setInterval(function() {
+        c2.userOperate('59aa0f336dc9f502cafb55c1')
+    }, 1000);
 }, 6000);

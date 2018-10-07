@@ -8,9 +8,6 @@ import BaseModel from './Base';
  * @todo 
  * 增加update和observer，当模型改变时，会自动触发监听函数
  */
-class BattleState {
-}
-
 class Battle extends BaseModel {
   namespace = 'battle';
   input = null;
