@@ -1,3 +1,5 @@
+import ws from '../utils/ws'
+
 const {ccclass, property} = cc._decorator;
 
 /**
@@ -23,20 +25,12 @@ export class Main extends cc.Component {
   btnToPackage: cc.Node = null;
 
   onLoad = () => {
-    // this._initBtns();
-    console.log(this.btnFriendsBattle);
-    this.btnFriendsBattle.on(cc.Node.EventType.MOUSE_DOWN, (event) => {
-      console.log('cool');
-    });
-
-    console.log(cc.Node.EventType.MOUSE_DOWN)
+    this._initBtns();
   }
 
   _initBtns = () => {
-    console.log('iunit')
     this.btnRankBattle.on('mousedown', () => {
-      console.log('cool');
-      cc.director.loadScene('Page_rankGame');
+      // cc.director.loadScene('Page_rankGame');
     });
 
     this.btnFriendsBattle.on('mousedown', () => {
