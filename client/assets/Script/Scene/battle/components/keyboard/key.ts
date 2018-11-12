@@ -62,7 +62,7 @@ export class Key extends cc.Component {
 
             this.enableBtnStatus('press')
 
-            this.node.emit('onTouchStart', { value: this.value })
+            // this.node.emit('onTouchStart', { value: this.value })
         }
 
         const onTouchUp = (e) => {
@@ -70,7 +70,10 @@ export class Key extends cc.Component {
 
             this.enableBtnStatus('normal')
 
-            this.node.emit('onTouchEnd', { value: this.value })
+            // this.node.emit('onTouchEnd', { value: this.value })
+            const keyPressEvent = new cc.Event.EventCustom('onKeyPress', true)
+            keyPressEvent.setUserData({ key: this.value })
+            this.node.dispatchEvent(keyPressEvent)
         }
 
         this.node.on('touchstart',onTouchDown, this.node);

@@ -1,7 +1,9 @@
 const { ccclass, property } = cc._decorator
 
 @ccclass
-export class Keyboard extends cc.Component {
+export class MyKeyboard extends cc.Component {
+    value = ''
+
     @property([cc.Node])
     keys: cc.Node[] = []
 
@@ -16,6 +18,9 @@ export class Keyboard extends cc.Component {
 
     @property(cc.Node)
     btnTips: cc.Node = null
+
+    @property(cc.Node)
+    displayText: cc.Node = null
 
     shuffleKeyboard(keys) {
         let alphabet = [
@@ -36,11 +41,27 @@ export class Keyboard extends cc.Component {
         }
 
         (keys || []).forEach((key, idx) => {
-            key.setValue(shuffled[idx])
+            key && key.getComponent && key.getComponent('key').setValue(shuffled[idx])
         })
     }
 
-    onLoad() {
+    initKeyEvent(keys) {
+        this.node.on('onKeyPress', (e) => {
+            e.stopPropagation()
 
+            const { key } = e.getUserData()
+
+            this.value += key
+        })
+    }
+
+    start() {
+        this.shuffleKeyboard(this.keys)
+
+        this.initKeyEvent(this.keys)
+    }
+
+    update() {
+        this.displayText.getComponent(cc.Label).string = this.value
     }
 }
